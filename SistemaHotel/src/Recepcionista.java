@@ -14,7 +14,7 @@ public class Recepcionista extends Thread{
 
     @Override
     public void run() {
-        
+
     }
 
     public void alocarHospedesEmQuartosVagos(){

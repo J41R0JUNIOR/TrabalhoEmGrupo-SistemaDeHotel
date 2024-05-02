@@ -6,6 +6,10 @@ public class Camareira extends  Thread{
     }
 
     public void run(){
+        
+    }
+
+    public void limparQuarto(){
 
     }
 }
