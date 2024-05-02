@@ -1,4 +1,4 @@
-import java.util.List;
+import java.util.ArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -6,14 +6,13 @@ public class Quarto {
     private final int numero;
     private final int capacidadeMaxima = 4;
     private int ocupacaoAtual;
-    private List<Hospede> hospedes;
+    private ArrayList<Hospede> hospedes;
     private boolean limpo;
     private final Lock lock;
 
-    public Quarto(int numero, List<Hospede> hospedes) {
+    public Quarto(int numero) {
         this.numero = numero;
         this.ocupacaoAtual = 0;
-        this.hospedes = hospedes;
         this.limpo = false;
 
         this.lock = new ReentrantLock();
@@ -35,11 +34,11 @@ public class Quarto {
         this.ocupacaoAtual = ocupacaoAtual;
     }
 
-    public List<Hospede> getHospedes() {
-        return hospedes;
+    public ArrayList<Hospede> getHospedes() {
+        return (ArrayList<Hospede>) hospedes;
     }
 
-    public void setHospedes(List<Hospede> hospedes) {
+    public void setHospedes(ArrayList<Hospede> hospedes) {
         this.hospedes = hospedes;
     }
 
@@ -49,6 +48,19 @@ public class Quarto {
 
     public void setLimpo(boolean limpo) {
         this.limpo = limpo;
+    }
+
+    //Funções do quarto
+
+    public void adicionarHospedes(ArrayList<Hospede> hospedes){
+        lock.lock();
+        try{
+            if(hospedes.size() <= capacidadeMaxima){
+                this.hospedes = hospedes;
+            }
+        }finally {
+            lock.unlock();
+        }
     }
 }
 
