@@ -10,6 +10,11 @@ public class Hospede extends Thread{
     }
 
     @Override
+    public void run() {
+
+    }
+
+    @Override
     public long getId() {
         return id;
     }
