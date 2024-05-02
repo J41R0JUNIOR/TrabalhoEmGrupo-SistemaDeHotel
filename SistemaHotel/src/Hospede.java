@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Hospede extends Thread{
     Integer id;
     Integer numeroQuarto;
@@ -11,8 +13,38 @@ public class Hospede extends Thread{
 
     @Override
     public void run() {
+        while(true){
+
+            if(numeroQuarto != 0){
+                Random random = new Random();
+                int randomNumber = random.nextInt(2);
+
+                if (randomNumber == 0) {
+                    sairPassear();
+                } else {
+                    irEmbora();
+                }
+            }
+            if(getQuantidadeTentativas() > 2){
+                irEmbora();
+            }else{
+                tentarSerAtendido();
+            }
+        }
+    }
+
+    public void tentarSerAtendido(){
 
     }
+
+    public void sairPassear(){
+
+    }
+
+    public void irEmbora(){
+
+    }
+
 
     @Override
     public long getId() {
