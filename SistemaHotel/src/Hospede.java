@@ -4,7 +4,6 @@ public class Hospede extends Thread{
     Integer id;
     Integer numeroQuarto;
     Integer quantidadeTentativas;
-
     public Hospede(Integer id){
         this.id = id;
         this.numeroQuarto = 0;
@@ -14,7 +13,6 @@ public class Hospede extends Thread{
     @Override
     public void run() {
         while(true){
-
             if(numeroQuarto != 0){
                 Random random = new Random();
                 int randomNumber = random.nextInt(2);
@@ -25,12 +23,17 @@ public class Hospede extends Thread{
                     irEmbora();
                 }
             }
-            if(getQuantidadeTentativas() > 2){
+            else if(getQuantidadeTentativas() > 2){
+                reclamarNaRecepcao();
                 irEmbora();
             }else{
                 tentarSerAtendido();
             }
         }
+    }
+
+    public void reclamarNaRecepcao(){
+
     }
 
     public void tentarSerAtendido(){
