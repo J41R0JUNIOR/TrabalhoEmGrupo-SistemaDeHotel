@@ -1,19 +1,23 @@
+import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 
 public class Recepcionista extends Thread{
-    private int id;
-    private BlockingQueue<Hospede> filaEspera;
-    private Quarto[] quartos;
-    private Camareira[] camareiras;
+    Integer id;
+    Boolean estaOcupada;
 
-    public Recepcionista(int id,BlockingQueue<Hospede> filaEspera, Quarto[] quartos, Camareira[] camareiras){
+
+    public Recepcionista(Integer id){
         this.id = id;
-        this.filaEspera = filaEspera;
-        this.quartos = quartos;
-        this.camareiras = camareiras;
+        this.estaOcupada = false;
+
     }
 
+    @Override
     public void run() {
+        
+    }
+
+    public void alocarHospedesEmQuartosVagos(){
 
     }
 }
