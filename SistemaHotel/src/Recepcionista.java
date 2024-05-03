@@ -7,8 +7,11 @@ public class Recepcionista extends Thread{
 
 
     public Recepcionista(Integer id){
+        super(String.valueOf(id));
+
         this.id = id;
         this.estaOcupada = false;
+
 
     }
 
