@@ -7,11 +7,11 @@ public class Hotel {
 
     public ArrayList<Hospede> hospedes = new ArrayList<>();
 
-    public Hotel(ArrayList<Hospede> hospedes){
+    public Hotel(){
         criarRecepcionistas(5);
         criarQuartos(10);
         criarCamareiras(10);
-        this.hospedes = hospedes;
+//        this.hospedes = hospedes;
 
     }
 
@@ -36,7 +36,7 @@ public class Hotel {
     private void criarRecepcionistas(int quantidade){
         //adicionando os recepcionistas
         for(int i = 1; i <= quantidade ; i++) {
-            recepcionistas.add(new Recepcionista(i, this));
+            recepcionistas.add(new Recepcionista(i));
             System.out.println("Recepcionista " + recepcionistas.get(i - 1).getName() + " criada");
         }
     }
