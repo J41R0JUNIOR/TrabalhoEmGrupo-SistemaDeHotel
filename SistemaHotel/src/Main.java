@@ -11,7 +11,7 @@ public class Main {
             System.out.println("hospede " + hospedes.get(i-1).getName() + " adiconado");
         }
 
-        Hotel hotel = new Hotel(hospedes);
+        Hotel hotel = new Hotel();
 
         // Inicia os threads dos recepcionistas
         for (Recepcionista recepcionista : hotel.recepcionistas) {
