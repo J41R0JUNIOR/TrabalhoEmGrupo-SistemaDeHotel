@@ -5,9 +5,11 @@ public class Hospede extends Thread{
     Integer numeroQuarto;
     Integer quantidadeTentativas;
     public Hospede(Integer id){
+        super(String.valueOf(id));
         this.id = id;
         this.numeroQuarto = 0;
         this.quantidadeTentativas = 0;
+
     }
 
     @Override

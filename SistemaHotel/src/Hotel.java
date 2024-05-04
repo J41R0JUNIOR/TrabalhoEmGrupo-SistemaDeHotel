@@ -4,18 +4,39 @@ public class Hotel {
     public ArrayList<Quarto> quartos = new ArrayList<Quarto>();
     public ArrayList<Recepcionista> recepcionistas = new ArrayList<>();
     public ArrayList<Camareira> camareiras = new ArrayList<>();
-    
-    public Hotel(){
+
+    public ArrayList<Hospede> hospedes = new ArrayList<>();
+
+    public Hotel(ArrayList<Hospede> hospedes){
         criarRecepcionistas(5);
         criarQuartos(10);
         criarCamareiras(10);
+        this.hospedes = hospedes;
 
+    }
+
+    private void limparQuarto(){
+
+    }
+
+    // Adiciona um novo hóspede ao hotel
+    public synchronized void adicionarHospede(Hospede hospede) {
+        hospedes.add(hospede);
+        System.out.println("Hóspede " + hospede.getName() + " adicionado ao hotel");
+    }
+
+    // Retorna o próximo hóspede a ser alocado
+    public synchronized Hospede proximoHospede() {
+        if (!hospedes.isEmpty()) {
+            return hospedes.remove(0);
+        }
+        return null; // Retorna null se não houver mais hóspedes a serem alocados
     }
 
     private void criarRecepcionistas(int quantidade){
         //adicionando os recepcionistas
         for(int i = 1; i <= quantidade ; i++) {
-            recepcionistas.add(new Recepcionista(i));
+            recepcionistas.add(new Recepcionista(i, this));
             System.out.println("Recepcionista " + recepcionistas.get(i - 1).getName() + " criada");
         }
     }
