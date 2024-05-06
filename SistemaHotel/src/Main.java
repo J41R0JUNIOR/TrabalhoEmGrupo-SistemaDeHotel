@@ -1,31 +1,38 @@
 import java.util.ArrayList;
+import java.util.Random;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
         ArrayList<Hospede> hospedes = new ArrayList<>();
 
         for(int i = 1; i <= 50; i++){
             hospedes.add(new Hospede(i));
-            System.out.println("hospede " + hospedes.get(i-1).getName() + " adiconado");
+            System.out.println("Hóspede " + hospedes.get(i-1).getName() + " adicionado");
         }
 
-        Hotel hotel = new Hotel();
+        // Criar grupos de hóspedes aleatoriamente
+        ArrayList<GrupoHospedes> grupos = new ArrayList<>();
+        Random rand = new Random();
+        int maxGrupos = 10;
 
-        // Inicia os threads dos recepcionistas
-        for (Recepcionista recepcionista : hotel.recepcionistas) {
-            recepcionista.start();
-        }
+        // Índice para percorrer a lista de hóspedes
+        int indexHospede = 0;
 
-        // Inicia os threads dos hóspedes
-        for (Hospede hospede : hotel.hospedes) {
-            hospede.start();
-        }
+        while (!hospedes.isEmpty()) {
+            ArrayList<Hospede> hospedesGrupo = new ArrayList<>();
 
-        // Simula a chegada dos hóspedes ao hotel
-        for (Hospede hospede : hotel.hospedes) {
-            hotel.adicionarHospede(hospede);
+            // Gera uma quantidade aleatória de hóspedes para o grupo atual
+            int tamanhoGrupo = rand.nextInt(hospedes.size()) + 1;
+
+            // Adiciona hóspedes ao grupo
+            for (int i = 0; i < tamanhoGrupo; i++) {
+                hospedesGrupo.add(hospedes.remove(0)); // Remove e adiciona o primeiro hóspede da lista
+            }
+
+            grupos.add(new GrupoHospedes(hospedesGrupo));
+            System.out.println("Grupo de Hóspedes criado com " + tamanhoGrupo + " membros");
         }
+        
+        Hotel hotel = new Hotel(grupos);
     }
 }

@@ -2,14 +2,21 @@ import java.util.Random;
 
 public class Hospede extends Thread{
     Integer id;
+    Integer groupId;
     Integer numeroQuarto;
     Integer quantidadeTentativas;
+    Boolean irEmbora;
+    Boolean reclamarNarecepcao;
+    Boolean estaPasseando;
     public Hospede(Integer id){
         super(String.valueOf(id));
         this.id = id;
+        this.groupId = 0;
         this.numeroQuarto = 0;
         this.quantidadeTentativas = 0;
-
+        this.irEmbora = false;
+        this.reclamarNarecepcao = false;
+        this.estaPasseando = false;
     }
 
     @Override
@@ -20,35 +27,37 @@ public class Hospede extends Thread{
                 int randomNumber = random.nextInt(2);
 
                 if (randomNumber == 0) {
-                    sairPassear();
+                    estaPasseando = true;
                 } else {
-                    irEmbora();
+                    //desocupar o quarto e ir embora
+                    irEmbora = true;
+                    break;
                 }
             }
             else if(getQuantidadeTentativas() > 2){
-                reclamarNaRecepcao();
-                irEmbora();
+//                reclamarNaRecepcao();
+                this.reclamarNarecepcao = true;
+                break;
+
             }else{
                 tentarSerAtendido();
             }
         }
     }
 
-    public void reclamarNaRecepcao(){
-
-    }
+//    public void reclamarNaRecepcao(){
+//
+//    }
 
     public void tentarSerAtendido(){
-
+        this.quantidadeTentativas += 1;
     }
 
     public void sairPassear(){
 
     }
 
-    public void irEmbora(){
 
-    }
 
 
     @Override

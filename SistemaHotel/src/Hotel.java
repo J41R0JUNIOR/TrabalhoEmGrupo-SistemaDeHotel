@@ -1,36 +1,32 @@
 import java.util.ArrayList;
 
 public class Hotel {
-    public ArrayList<Quarto> quartos = new ArrayList<Quarto>();
+    private ArrayList<Quarto> quartos = new ArrayList<>();
     public ArrayList<Recepcionista> recepcionistas = new ArrayList<>();
-    public ArrayList<Camareira> camareiras = new ArrayList<>();
+    private ArrayList<Camareira> camareiras = new ArrayList<>();
 
-    public ArrayList<Hospede> hospedes = new ArrayList<>();
+    public ArrayList<GrupoHospedes> grupoHospedes = new ArrayList<>();
 
-    public Hotel(){
+
+
+    public Hotel(ArrayList<GrupoHospedes> grupoHospedes){
         criarRecepcionistas(5);
         criarQuartos(10);
         criarCamareiras(10);
-//        this.hospedes = hospedes;
+        this.grupoHospedes = grupoHospedes;
 
     }
 
-    private void limparQuarto(){
+    public  void adicionarHospedes(int quantidadeGrupo){
 
     }
 
-    // Adiciona um novo hóspede ao hotel
-    public synchronized void adicionarHospede(Hospede hospede) {
-        hospedes.add(hospede);
-        System.out.println("Hóspede " + hospede.getName() + " adicionado ao hotel");
-    }
 
-    // Retorna o próximo hóspede a ser alocado
-    public synchronized Hospede proximoHospede() {
-        if (!hospedes.isEmpty()) {
-            return hospedes.remove(0);
+    private void limparQuarto(Quarto quarto){
+        //limpando o quarto
+        if (!quarto.isLimpo()){
+            quarto.setLimpo(true);
         }
-        return null; // Retorna null se não houver mais hóspedes a serem alocados
     }
 
     private void criarRecepcionistas(int quantidade){
@@ -38,6 +34,7 @@ public class Hotel {
         for(int i = 1; i <= quantidade ; i++) {
             recepcionistas.add(new Recepcionista(i));
             System.out.println("Recepcionista " + recepcionistas.get(i - 1).getName() + " criada");
+            recepcionistas.get(i - 1).start();
         }
     }
 
@@ -46,7 +43,6 @@ public class Hotel {
         for(int i = 1; i <= quantidade ; i++) {
             quartos.add(new Quarto(i));
             System.out.println("Quarto " + quartos.get(i  - 1).getNumero() + " criado");
-
         }
     }
 
@@ -55,7 +51,7 @@ public class Hotel {
         for(int i = 1; i <= quantidade; i++) {
             camareiras.add(new Camareira(i));
             System.out.println("Camareira " + quartos.get(i  - 1).getNumero() + " criado");
-
+            camareiras.get(i - 1).start();
         }
     }
 }
