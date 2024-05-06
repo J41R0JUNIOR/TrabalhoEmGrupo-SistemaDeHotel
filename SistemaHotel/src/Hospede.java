@@ -69,6 +69,38 @@ public class Hospede extends Thread{
         this.id = id;
     }
 
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
+    }
+
+    public Boolean getIrEmbora() {
+        return irEmbora;
+    }
+
+    public void setIrEmbora(Boolean irEmbora) {
+        this.irEmbora = irEmbora;
+    }
+
+    public Boolean getReclamarNarecepcao() {
+        return reclamarNarecepcao;
+    }
+
+    public void setReclamarNarecepcao(Boolean reclamarNarecepcao) {
+        this.reclamarNarecepcao = reclamarNarecepcao;
+    }
+
+    public Boolean getEstaPasseando() {
+        return estaPasseando;
+    }
+
+    public void setEstaPasseando(Boolean estaPasseando) {
+        this.estaPasseando = estaPasseando;
+    }
+
     public Integer getNumeroQuarto() {
         return numeroQuarto;
     }
