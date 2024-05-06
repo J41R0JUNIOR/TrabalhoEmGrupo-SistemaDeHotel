@@ -14,13 +14,13 @@ public class Main {
         ArrayList<GrupoHospedes> grupos = new ArrayList<>();
         Random rand = new Random();
 
-
         int indexGroupId = 1;
         while (!hospedes.isEmpty()) {
             ArrayList<Hospede> hospedesGrupo = new ArrayList<>();
 
             // Gera uma quantidade aleatória de hóspedes para o grupo atual
             int tamanhoGrupo = rand.nextInt(hospedes.size()) + 1;
+
             if (tamanhoGrupo > 10){
                 tamanhoGrupo = rand.nextInt(hospedes.size()/2 + 1);
             }
@@ -39,8 +39,8 @@ public class Main {
             for (Hospede hospede : novoGrupo.getParticipantes()) {
                 System.out.print("- " + hospede.getName());
             }
-            System.out.println();
 
+            System.out.println();
 
             // Index geral do grupo
             indexGroupId += 1;
