@@ -11,30 +11,37 @@ public class Hotel {
         criarQuartos(10);
         criarCamareiras(10);
         this.grupoHospedes = grupoHospedes;
+
         for (Recepcionista recepcionista : recepcionistas) {
             recepcionista.setQuartosDisponiveis(quartos);
         }
+
+//        while (grupoHospedes != null){
+//            delegarAlocacaoHospedes();
+//        }
     }
 
-    public void delegarAlocacaoHospedes() {
-        int indexRecepcionista = 0;
-
-        // Para cada grupo de hóspedes
-        for (GrupoHospedes grupo : grupoHospedes) {
-            // Obtém a próxima recepcionista
-            Recepcionista recepcionista = recepcionistas.get(indexRecepcionista);
-
-            // Delega a alocação de hóspedes para a recepcionista
-            recepcionista.alocarHospedes(grupo);
-
-            // Atualiza o índice da recepcionista para o próximo ciclo
-            indexRecepcionista = (indexRecepcionista + 1) % recepcionistas.size();
-        }
-    }
+//    public void delegarAlocacaoHospedes() {
+//        int indexRecepcionista = 0;
+//
+//        // Para cada grupo de hóspedes
+//        for (GrupoHospedes grupo : grupoHospedes) {
+//            // Obtém a próxima recepcionista
+//            Recepcionista recepcionista = recepcionistas.get(indexRecepcionista);
+//
+////           if(!recepcionista.estaOcupada) {
+//               recepcionista.alocarHospedes(grupo);
+//               indexRecepcionista = (indexRecepcionista + 1) % recepcionistas.size();
+//               System.out.println("Grupo sendo atendeido pela recepcionista" + recepcionista.getId());
+////           }else{
+////               grupo.tentativaFalha();
+////           }
+//        }
+//    }
 
     private void criarRecepcionistas(int quantidade){
         for(int i = 1; i <= quantidade ; i++) {
-            recepcionistas.add(new Recepcionista(i));
+            recepcionistas.add(new Recepcionista(i, grupoHospedes));
 //            System.out.println("Recepcionista " + recepcionistas.get(i - 1).getName() + " criada");
             recepcionistas.get(i - 1).start();
         }
