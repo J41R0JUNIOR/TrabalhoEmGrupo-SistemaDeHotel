@@ -5,7 +5,7 @@ public class Recepcionista extends Thread{
     Boolean estaOcupada;
     ArrayList<String> reclamacoes = new ArrayList<>();
 //    ArrayList<Hospede> grupoEmAtendimento = new ArrayList<>();
-    ArrayList<Quarto> quartosDisponiveis; // Lista de quartos disponíveis no hotel
+    ArrayList<Quarto> quartos; // Lista de quartos disponíveis no hotel
     ArrayList<GrupoHospedes> grupoHospedes;
 
     public Recepcionista(Integer id, ArrayList<GrupoHospedes> grupoHospedes){
@@ -14,7 +14,7 @@ public class Recepcionista extends Thread{
         this.estaOcupada = false;
         this.grupoHospedes = grupoHospedes;
 
-        this.start();
+//        this.start();
     }
 
     @Override
@@ -23,11 +23,13 @@ public class Recepcionista extends Thread{
 
         while(grupoHospedes != null){
             System.out.println("Grupos nao é null heeeeeeeee");
-            if(!estaOcupada && !grupoHospedes.get(0).estaPasseando){
-                alocarHospedes(grupoHospedes.get(0));
-                grupoHospedes.remove(0);
-            }else{
-                grupoHospedes.get(0).tentativaFalha();
+            if(!grupoHospedes.isEmpty()) {
+                if (!estaOcupada && !grupoHospedes.get(0).estaPasseando) {
+                    alocarHospedes(grupoHospedes.get(0));
+                    grupoHospedes.remove(0);
+                } else {
+                    grupoHospedes.get(0).tentativaFalha();
+                }
             }
         }
     }
@@ -35,7 +37,7 @@ public class Recepcionista extends Thread{
 
     // Método para definir os quartos disponíveis
     public void setQuartosDisponiveis(ArrayList<Quarto> quartosDisponiveis) {
-        this.quartosDisponiveis = quartosDisponiveis;
+        this.quartos = quartosDisponiveis;
     }
 
     public void alocarHospedes(GrupoHospedes grupo){
@@ -55,8 +57,8 @@ public class Recepcionista extends Thread{
 //                    System.out.println("Não há quartos disponíveis para alocar o hóspede " + hospede.getName());
 //                }
 //            }
-            if(!quartosDisponiveis.isEmpty()){
-                Quarto quarto = quartosDisponiveis.remove(0);
+            if(!quartos.isEmpty()){
+                Quarto quarto = quartos.remove(0);
                 grupo.numeroQuarto = quarto.getNumero();
 
                 for (Hospede hospede : grupo.getParticipantes()) {
