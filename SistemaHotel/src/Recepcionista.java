@@ -12,13 +12,20 @@ public class Recepcionista extends Thread{
         super(String.valueOf(id));
         this.id = id;
         this.estaOcupada = false;
+        this.grupoHospedes = grupoHospedes;
+
+        this.start();
     }
 
     @Override
     public void run() {
+        System.out.println("É dentro");
+
         while(grupoHospedes != null){
+            System.out.println("Grupos nao é null heeeeeeeee");
             if(!estaOcupada && !grupoHospedes.get(0).estaPasseando){
                 alocarHospedes(grupoHospedes.get(0));
+                grupoHospedes.remove(0);
             }else{
                 grupoHospedes.get(0).tentativaFalha();
             }
@@ -54,8 +61,12 @@ public class Recepcionista extends Thread{
 
                 for (Hospede hospede : grupo.getParticipantes()) {
                     hospede.setNumeroQuarto(quarto.getNumero());
+
+                    System.out.println("hospede" + hospede.getId()  + " hospedado no quarto" + quarto.getNumero());
                 }
                 System.out.println("Grupo" + grupo.idGrupo + "alocado no quarto " + quarto.getNumero());
+
+
             }
             estaOcupada = false;
         } else {
