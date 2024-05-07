@@ -5,6 +5,7 @@ public class Hotel {
     public ArrayList<Recepcionista> recepcionistas = new ArrayList<>();
     private ArrayList<Camareira> camareiras = new ArrayList<>();
     public ArrayList<GrupoHospedes> grupoHospedes = new ArrayList<>();
+    public ArrayList<Integer> chavesNaRecepcao = new ArrayList<>();
 
     public Hotel(ArrayList<GrupoHospedes> grupoHospedes){
         criarRecepcionistas(5);

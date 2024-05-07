@@ -51,11 +51,16 @@ public class Recepcionista extends Thread{
             if(!quartosDisponiveis.isEmpty()){
                 Quarto quarto = quartosDisponiveis.remove(0);
                 grupo.numeroQuarto = quarto.getNumero();
+
+                for (Hospede hospede : grupo.getParticipantes()) {
+                    hospede.setNumeroQuarto(quarto.getNumero());
+                }
                 System.out.println("Grupo" + grupo.idGrupo + "alocado no quarto " + quarto.getNumero());
             }
             estaOcupada = false;
         } else {
             System.out.println("A recepcionista está ocupada. Aguarde um momento.");
+            grupo.tentativaFalha();
         }
     }
 
