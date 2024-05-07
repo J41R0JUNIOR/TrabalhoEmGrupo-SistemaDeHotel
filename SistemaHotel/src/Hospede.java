@@ -17,6 +17,7 @@ public class Hospede extends Thread{
 //        this.irEmbora = false;
 //        this.reclamarNarecepcao = false;
 //        this.estaPasseando = false;
+        this.start();
     }
 
     @Override

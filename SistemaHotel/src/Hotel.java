@@ -16,12 +16,10 @@ public class Hotel {
 
         criarCamareiras(10);
 
-        for(Recepcionista recepcionista: recepcionistas){
-            recepcionista.start();
-        }
+//        for(Recepcionista recepcionista: recepcionistas){
+//            recepcionista.start();
+//        }
     }
-
-
 
     private void criarQuartos(int quantidade){
         for(int i = 1; i <= quantidade ; i++) {
@@ -30,7 +28,6 @@ public class Hotel {
         }
 //        System.out.println(this.quartos);
     }
-
 
     private void criarRecepcionistas(int quantidade){
         for(int i = 1; i <= quantidade ; i++) {
@@ -41,8 +38,6 @@ public class Hotel {
 //            recepcionistas.get(i - 1).start();
         }
     }
-
-
 
     public void criarCamareiras(int quantidade){
         for(int i = 1; i <= quantidade; i++) {
@@ -56,15 +51,18 @@ public class Hotel {
         if (quartos != null && !quartos.isEmpty()) {
             Quarto quarto;
             lock.lock();
-//            try {
+            try {
             quarto = quartos.remove(0);
-//            } finally {
-//                lock.unlock();
-//            }
+            } finally {
+                lock.unlock();
+            }
             grupo.numeroQuarto = quarto.getNumero();
+            grupo.chaveQuarto = quarto.getNumero();
             quarto.adicionarHospedes(grupo.getParticipantes());
 
-            System.out.println("Grupo " + grupo.idGrupo + " alocado no quarto " + quarto.getNumero() + " pela recepcionista " + recepcionista.id);
+//            System.out.println("Grupo " + grupo.idGrupo + " alocado no quarto " + quarto.getNumero() + " pela recepcionista " + recepcionista.id);
+            System.out.println("Grupo " + grupo.idGrupo + " alocado no quarto " + quarto.getNumero());
+
         } else {
             System.out.println("Não há quartos disponíveis para alocar o grupo " + grupo.idGrupo);
             System.out.println(grupo.participantes);

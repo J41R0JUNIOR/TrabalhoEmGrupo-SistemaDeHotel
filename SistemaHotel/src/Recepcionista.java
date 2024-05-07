@@ -14,7 +14,7 @@ public class Recepcionista extends Thread {
         super(String.valueOf(id));
         this.id = id;
         this.hotel = hotel;
-//        this.start();
+        this.start();
     }
 
     @Override
