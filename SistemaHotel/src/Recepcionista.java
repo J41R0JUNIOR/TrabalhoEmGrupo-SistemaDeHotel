@@ -1,83 +1,50 @@
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class Recepcionista extends Thread{
+public class Recepcionista extends Thread {
     Integer id;
-    Boolean estaOcupada;
     ArrayList<String> reclamacoes = new ArrayList<>();
-//    ArrayList<Hospede> grupoEmAtendimento = new ArrayList<>();
-    ArrayList<Quarto> quartos; // Lista de quartos disponíveis no hotel
-    ArrayList<GrupoHospedes> grupoHospedes;
 
-    public Recepcionista(Integer id, ArrayList<GrupoHospedes> grupoHospedes){
+
+    private Lock lock;
+    Hotel hotel;
+
+    public Recepcionista(Integer id, Hotel hotel) {
         super(String.valueOf(id));
         this.id = id;
-        this.estaOcupada = false;
-        this.grupoHospedes = grupoHospedes;
-
+        this.hotel = hotel;
 //        this.start();
     }
 
     @Override
     public void run() {
-        System.out.println("É dentro");
-
-        while(grupoHospedes != null){
-            System.out.println("Grupos nao é null heeeeeeeee");
-            if(!grupoHospedes.isEmpty()) {
-                if (!estaOcupada && !grupoHospedes.get(0).estaPasseando) {
-                    alocarHospedes(grupoHospedes.get(0));
-                    grupoHospedes.remove(0);
+        while (true) {
+            GrupoHospedes grupo;
+            hotel.lock.lock();
+            try {
+                if (!hotel.grupos.isEmpty()) {
+                    grupo = hotel.grupos.get(0);
+                    if (!grupo.estaPasseando) {
+                        hotel.alocarHospedes(grupo, this);
+                        hotel.grupos.remove(grupo);
+                    } else {
+                        grupo.tentativaFalha();
+                    }
                 } else {
-                    grupoHospedes.get(0).tentativaFalha();
+                    break;
                 }
+            } finally {
+                hotel.lock.unlock();
             }
         }
     }
 
 
-    // Método para definir os quartos disponíveis
-    public void setQuartosDisponiveis(ArrayList<Quarto> quartosDisponiveis) {
-        this.quartos = quartosDisponiveis;
-    }
-
-    public void alocarHospedes(GrupoHospedes grupo){
-        if (!estaOcupada) {
-            estaOcupada = true;
-            // Para cada hóspede no grupo
-//            for (Hospede hospede : grupo.getParticipantes()) {
-//                // Verifica se ainda há quartos disponíveis
-//                if (!quartosDisponiveis.isEmpty()) {
-//                    // Atribui o próximo quarto disponível ao hóspede
-//                    Quarto quarto = quartosDisponiveis.remove(0); // Remove e retorna o primeiro quarto disponível
-//                    hospede.setNumeroQuarto(quarto.getNumero());
-//                    System.out.println("Hóspede " + hospede.getName() + " alocado no quarto " + quarto.getNumero());
-//                    // Aqui você pode adicionar mais lógica, como definir o grupoEmAtendimento para o grupo atual
-//                } else {
-//                    // Se não houver quartos disponíveis, você pode lidar com isso de acordo com sua lógica de negócios
-//                    System.out.println("Não há quartos disponíveis para alocar o hóspede " + hospede.getName());
-//                }
-//            }
-            if(!quartos.isEmpty()){
-                Quarto quarto = quartos.remove(0);
-                grupo.numeroQuarto = quarto.getNumero();
-
-                for (Hospede hospede : grupo.getParticipantes()) {
-                    hospede.setNumeroQuarto(quarto.getNumero());
-
-                    System.out.println("hospede" + hospede.getId()  + " hospedado no quarto" + quarto.getNumero());
-                }
-                System.out.println("Grupo" + grupo.idGrupo + "alocado no quarto " + quarto.getNumero());
 
 
-            }
-            estaOcupada = false;
-        } else {
-            System.out.println("A recepcionista está ocupada. Aguarde um momento.");
-            grupo.tentativaFalha();
-        }
-    }
 
-    public void anotarReclamacao(String nomeHospede){
+    public void anotarReclamacao(String nomeHospede) {
         String reclamacao = "Hospede " + nomeHospede + " fez uma reclamação!";
         reclamacoes.add(reclamacao);
         System.out.println(reclamacao);
