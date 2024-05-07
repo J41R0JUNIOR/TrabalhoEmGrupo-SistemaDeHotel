@@ -7,6 +7,7 @@ public class GrupoHospedes {
     Integer numeroQuarto;
     Boolean estaPasseando;
 
+
     GrupoHospedes(ArrayList<Hospede> participantes, Integer idGrupo){
         this.participantes = participantes;
         this.idGrupo = idGrupo;

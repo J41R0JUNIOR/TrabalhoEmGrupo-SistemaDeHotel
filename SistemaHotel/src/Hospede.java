@@ -3,7 +3,7 @@ import java.util.Random;
 public class Hospede extends Thread{
     Integer id;
     Integer groupId;
-//    Integer numeroQuarto;
+    Integer numeroQuarto;
 //    Integer quantidadeTentativas;
 //    Boolean irEmbora;
 //    Boolean reclamarNarecepcao;
@@ -12,7 +12,7 @@ public class Hospede extends Thread{
         super(String.valueOf(id));
         this.id = id;
         this.groupId = 0;
-//        this.numeroQuarto = 0;
+        this.numeroQuarto = 0;
 //        this.quantidadeTentativas = 0;
 //        this.irEmbora = false;
 //        this.reclamarNarecepcao = false;
@@ -101,13 +101,13 @@ public class Hospede extends Thread{
 //        this.estaPasseando = estaPasseando;
 //    }
 //
-//    public Integer getNumeroQuarto() {
-//        return numeroQuarto;
-//    }
-//
-//    public void setNumeroQuarto(Integer numeroQuarto) {
-//        this.numeroQuarto = numeroQuarto;
-//    }
+    public Integer getNumeroQuarto() {
+        return numeroQuarto;
+    }
+
+    public void setNumeroQuarto(Integer numeroQuarto) {
+        this.numeroQuarto = numeroQuarto;
+    }
 //
 //    public Integer getQuantidadeTentativas() {
 //        return quantidadeTentativas;
