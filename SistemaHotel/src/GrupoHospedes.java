@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 
-public class GrupoHospedes {
+public class GrupoHospedes extends Thread{
     ArrayList<Hospede> participantes;
     Integer idGrupo;
     Integer qtdTentativas;
     Integer numeroQuarto;
     Boolean estaPasseando;
+    Boolean querAtendimento;
 
 
     GrupoHospedes(ArrayList<Hospede> participantes, Integer idGrupo){
@@ -14,6 +15,7 @@ public class GrupoHospedes {
         this.qtdTentativas = 0;
         this.numeroQuarto = 0;
         this.estaPasseando = false;
+        this.querAtendimento = false;
     }
 
     public ArrayList<Hospede> getParticipantes() {
