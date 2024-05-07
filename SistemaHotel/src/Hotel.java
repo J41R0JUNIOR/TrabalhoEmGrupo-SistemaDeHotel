@@ -44,7 +44,7 @@ public class Hotel {
         for(int i = 1; i <= quantidade ; i++) {
             recepcionistas.add(new Recepcionista(i, grupoHospedes));
 //            System.out.println("Recepcionista " + recepcionistas.get(i - 1).getName() + " criada");
-            recepcionistas.get(i - 1).start();
+//            recepcionistas.get(i - 1).start();
         }
     }
 
