@@ -11,6 +11,7 @@ public class Recepcionista extends Thread {
     public Recepcionista(Integer id) {
         this.id = id;
 //        System.out.println("Recepcionista " + id + " criada!");
+        this.start();
     }
 
     public void run() {
