@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,12 +13,14 @@ public class Main {
         List<Recepcionista> recepcionistas = criarRecepcionista(5);
         List<Quarto> quartos = criarQuartos(10);
 
+        System.out.println(criarGrupos(hospedes).size());
+
 
     }
 
-    public static List<Grupo> criarGrupos(List<Hospede> hospedes){
+    public static List<Grupo> criarGrupos(List<Hospede> hospedes) {
         // Criar grupos de hóspedes aleatoriamente
-        ArrayList<GrupoHospedes> grupos = new ArrayList<>();
+        ArrayList<Grupo> grupos = new ArrayList<>();
         Random rand = new Random();
 
         int indexGroupId = 1;
@@ -38,7 +41,7 @@ public class Main {
                     hospedesGrupo.add(hospedes.remove(0)); // Remove e adiciona o primeiro hóspede da lista
                 }
 
-                GrupoHospedes novoGrupo = new GrupoHospedes(hospedesGrupo, indexGroupId);
+                Grupo novoGrupo = new Grupo(indexGroupId, hospedesGrupo);
 
                 grupos.add(novoGrupo);
 
@@ -46,7 +49,7 @@ public class Main {
                 indexGroupId += 1;
             }
         }
-        return null;
+        return grupos;
     }
 
     public static List<Hospede> criarHospedes(int quantidade) {
