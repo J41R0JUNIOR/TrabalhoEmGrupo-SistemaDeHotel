@@ -6,19 +6,16 @@ public class Main {
     public static void main(String[] args) {
 
         List<Hospede> hospedes = criarHospedes(50);
-
-        Hotel hotel = new Hotel(hospedes);
-
-
+        List<Grupo> grupos = criarGrupos(hospedes);
         List<Recepcionista> recepcionistas = criarRecepcionista(5);
         List<Quarto> quartos = criarQuartos(10);
 
-        System.out.println(criarGrupos(hospedes).size());
-
-
+        Hotel hotel = new Hotel(recepcionistas, grupos, quartos);
     }
 
-    public static List<Grupo> criarGrupos(List<Hospede> hospedes) {
+    public static List<Grupo> criarGrupos(List<Hospede> hospedes){
+
+
         // Criar grupos de hóspedes aleatoriamente
         ArrayList<Grupo> grupos = new ArrayList<>();
         Random rand = new Random();
@@ -37,7 +34,6 @@ public class Main {
 
                 // Adiciona hóspedes ao grupo
                 for (int i = 0; i < tamanhoGrupo; i++) {
-                    hospedes.get(0).groupId = indexGroupId;
                     hospedesGrupo.add(hospedes.remove(0)); // Remove e adiciona o primeiro hóspede da lista
                 }
 
@@ -48,6 +44,7 @@ public class Main {
                 // Index geral do grupo
                 indexGroupId += 1;
             }
+
         }
         return grupos;
     }
