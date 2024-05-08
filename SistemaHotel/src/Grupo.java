@@ -9,6 +9,7 @@ public class Grupo {
         this.id = id;
     }
 
+
     public Integer getId() {
         return id;
     }
@@ -24,4 +25,5 @@ public class Grupo {
     public void setListaHospedes(List<Hospede> listaHospedes) {
         this.listaHospedes = listaHospedes;
     }
+
 }

@@ -1,8 +1,10 @@
 public class Hospede extends Thread {
+    public int groupId;
     private Integer id;
 
     public Hospede(Integer id) {
         this.id = id;
+        this.groupId = groupId;
 //        System.out.println("Hospede " + id + " criado!");
     }
 
@@ -11,4 +13,7 @@ public class Hospede extends Thread {
         return id;
     }
 
+    public int getGroupId() {
+        return groupId;
+    }
 }

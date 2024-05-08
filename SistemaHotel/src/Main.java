@@ -15,6 +15,7 @@ public class Main {
 
     public static List<Grupo> criarGrupos(List<Hospede> hospedes){
 
+
         // Criar grupos de hóspedes aleatoriamente
         ArrayList<Grupo> grupos = new ArrayList<>();
         Random rand = new Random();
