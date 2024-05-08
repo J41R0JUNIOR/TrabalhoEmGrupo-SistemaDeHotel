@@ -9,4 +9,19 @@ public class Grupo {
         this.id = id;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public List<Hospede> getListaHospedes() {
+        return listaHospedes;
+    }
+
+    public void setListaHospedes(List<Hospede> listaHospedes) {
+        this.listaHospedes = listaHospedes;
+    }
 }
