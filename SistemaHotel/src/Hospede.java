@@ -5,4 +5,10 @@ public class Hospede extends Thread {
         this.id = id;
 //        System.out.println("Hospede " + id + " criado!");
     }
+
+    @Override
+    public long getId() {
+        return id;
+    }
+
 }

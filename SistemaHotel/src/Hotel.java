@@ -4,35 +4,28 @@ import java.util.List;
 public class Hotel {
     private List<Recepcionista> recepcionistas;
     private List<Hospede> hospedes;
+    private List<List<Hospede>> gruposHospedes;
     private List<Quarto> quartos;
+    private Hospede hospede;
 
     public Hotel(List<Hospede> hospedes) {
         this.recepcionistas = new ArrayList<>();
         this.hospedes = new ArrayList<>(hospedes);
         this.quartos = new ArrayList<>();
+        this.gruposHospedes = new ArrayList<>();
     }
 
-    private void criarRecepcionistas() {
-        for (int i = 1; i <= 5; i++) {
-            recepcionistas.add(new Recepcionista(i));
+    private void dividirGruposHospedes() {
+        for (int i = 0; i < hospedes.size(); i += 4) {
+            List<Hospede> group = new ArrayList<>();
+            for (int j = i; j < i + 4 && j < hospedes.size(); j++) {
+                group.add(hospedes.get(j));
+            }
+            gruposHospedes.add(group);
         }
     }
 
-    private void startRecepcionistas() {
-        for (Recepcionista recepcionista : recepcionistas) {
-            recepcionista.start();
-        }
-    }
 
-    private void criarQuartos(){
-        for (int i = 1; i <= 10; i++) {
-            quartos.add(new Quarto(i));
-        }
-    }
 
-    public void run() {
-        criarRecepcionistas();
-        criarQuartos();
-        startRecepcionistas();
-    }
+
 }

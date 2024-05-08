@@ -11,9 +11,15 @@ public class Main {
 
         Hotel hotel = new Hotel(hospedes);
 
-        hotel.run();
+        // Cria e starta as 5 recepcionistas
+        for (int i = 1; i <= 5; i++) {
+           Recepcionista recepcionistas = new Recepcionista(i);
+           recepcionistas.start();
+        }
 
-
+        for (int i = 1; i <= 10; i++) {
+            Quarto quarto = new Quarto(i);
+        }
 
     }
 }
