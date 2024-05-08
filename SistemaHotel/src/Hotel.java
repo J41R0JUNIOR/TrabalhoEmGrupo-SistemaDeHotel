@@ -10,14 +10,21 @@ public class Hotel {
 
     public Hotel(List<Recepcionista> recepcionistas, List<Grupo> grupos, List<Quarto> quartos) {
         this.recepcionistas = recepcionistas;
-
         this.quartos = quartos;
         this.grupos = grupos;
+        System.out.println(recepcionistas);
+        System.out.println(grupos);
+        System.out.println(quartos);
 
     }
 
-    private void dividirGruposHospedes() {
+    private void dividirGruposHospedes(Grupo grupo) {
+        List<Hospede> hospedes = new ArrayList<>();
 
+        for(int i = 0; i < 4; i++){
+            
+        }
+//        Grupo novoGrupo = new Grupo(grupo.getId(),)
     }
 }
 
