@@ -14,7 +14,6 @@ public class Main {
         // Cria e starta as 5 recepcionistas
         for (int i = 1; i <= 5; i++) {
            Recepcionista recepcionistas = new Recepcionista(i);
-           recepcionistas.start();
         }
 
         for (int i = 1; i <= 10; i++) {
