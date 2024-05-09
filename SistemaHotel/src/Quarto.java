@@ -24,14 +24,14 @@ public class Quarto {
                 + " devolveram a chave na recepção e foram passear.");
         limpo = false;
 
-        while (!limpo){
-            System.out.println("Hóspedes do quarto " + numero + " esperando");
-        }
-
-//        if (limpo == false) {
-//            System.out.println("Hóspedes do quarto " + numero
-//                    + " pegaram a chave na recepção e voltaram pro quarto.");
+//        while (!limpo){
+//            System.out.println("Hóspedes do quarto " + numero + " esperando");
 //        }
+
+        if (limpo == false) {
+            System.out.println("Hóspedes do quarto " + numero
+                    + " pegaram a chave na recepção e voltaram pro quarto.");
+        }
     }
 
     public int getNumero() {

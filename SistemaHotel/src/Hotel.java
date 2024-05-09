@@ -53,9 +53,9 @@ public class Hotel {
 
         for(Quarto quarto : quartos) {
             quarto.devolverChave();
-            for(Camareira camareira: camareiras){
-                camareira.limparQuarto(quarto);
-            }
+//            for(Camareira camareira: camareiras){
+//                camareira.limparQuarto(quarto);
+//            }
         }
     }
 

@@ -15,11 +15,11 @@ public class Camareira extends Thread {
     }
 
     public void run() {
-        while (true) {
-            for(Quarto quarto : hotel.quartos){
-                limparQuarto(quarto);
-            }
-        }
+//        while (true) {
+//            for(Quarto quarto : hotel.quartos){
+//                limparQuarto(quarto);
+//            }
+//        }
     }
 
     public void limparQuarto(Quarto quarto) {

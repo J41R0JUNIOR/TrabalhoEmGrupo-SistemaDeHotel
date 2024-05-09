@@ -36,7 +36,7 @@ public class Recepcionista extends Thread {
 //                break; // Se não houver quartos disponíveis, saia do loop
             } else {
 
-                System.out.println("Há grupos ainda");
+//                System.out.println("Há grupos ainda");
                 hotel.lock.lock();
                 try {
                     System.out.println("encontrou um quarto numero " + quarto.getNumero());
