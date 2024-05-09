@@ -12,6 +12,7 @@ public class Quarto {
     public Quarto(int numero) {
         this.numero = numero;
         this.limpo = false;
+        this.hospedes = new ArrayList<>();
 //        System.out.println("Quarto " + numero + " criado!");
 
         this.lock = new ReentrantLock();

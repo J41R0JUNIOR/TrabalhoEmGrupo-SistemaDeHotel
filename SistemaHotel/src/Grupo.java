@@ -6,7 +6,7 @@ public class Grupo {
     private Integer id;
     public Boolean estaAlocado = false;
 
-    public Grupo(Integer id ,List<Hospede> listaHospedes) {
+    public Grupo(Integer id, List<Hospede> listaHospedes) {
         this.listaHospedes = listaHospedes;
         this.id = id;
 
