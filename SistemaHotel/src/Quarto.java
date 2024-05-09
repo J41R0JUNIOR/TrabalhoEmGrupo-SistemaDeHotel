@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -31,6 +32,21 @@ public class Quarto {
         if (limpo == false) {
             System.out.println("Hóspedes do quarto " + numero
                     + " pegaram a chave na recepção e voltaram pro quarto.");
+        }
+    }
+
+    public void removerHospedes(ArrayList<Hospede> hospedesParaRemover) {
+        lock.lock(); // Adquire o bloqueio antes de acessar a região crítica
+        try {
+            Iterator<Hospede> iterator = hospedes.iterator();
+            while (iterator.hasNext()) {
+                Hospede hospede = iterator.next();
+                if (hospedesParaRemover.contains(hospede)) {
+                    iterator.remove(); // Remove o hóspede da lista
+                }
+            }
+        } finally {
+            lock.unlock(); // Libera o bloqueio após a conclusão da operação na região crítica
         }
     }
 

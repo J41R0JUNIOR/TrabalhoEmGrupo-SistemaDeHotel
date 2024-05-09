@@ -7,6 +7,7 @@ public class Grupo extends Thread {
     public Boolean estaAlocado = false;
     public Integer tentativas = 0;
     public Boolean estaComChave = false;
+    public Boolean irEmbora = false;
     public int numeroQuarto;
 
     public Grupo(Integer id, List<Hospede> listaHospedes, int numeroQuarto) {
@@ -16,19 +17,38 @@ public class Grupo extends Thread {
         this.start(); // Iniciar a execução da thread
     }
 
-    @Override
     public void run() {
+
         while (true) {
-            if (estaAlocado) {
-                try {
-                    Thread.sleep(3000); // Espera por 3 segundos (3000 milissegundos)
-                    System.out.println("Grupo " + id + " está indo passear.");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+//            System.out.println("cornoooooo");
+            irPassear();
+        }
+
+    }
+
+    public void irPassear(){
+
+//        System.out.println(id + "esta alocado?" + estaAlocado);
+        if (estaAlocado) {
+//            System.out.println(id + "esta alocado? entrou no if" );
+                if (estaComChave) {
+                    estaComChave = false;
+                    try {
+                        Thread.sleep(3000);
+                        System.out.println("Grupo " + id + " está indo passear.");
+                        Thread.sleep(3000);
+
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+
+//                    System.out.println("Grupo " + id + " está indo passear.");
+                    System.out.println("Grupo " + id + " está voltando do passeio");
+                    estaComChave = true;
                 }
-            } else {
-                // Lógica para quando o grupo não está alocado
-            }
+
+        } else {
+//                System.out.println("grupo nao pode passear");
         }
     }
 

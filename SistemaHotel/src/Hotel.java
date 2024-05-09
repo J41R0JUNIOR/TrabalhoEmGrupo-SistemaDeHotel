@@ -10,7 +10,6 @@ public class Hotel {
     public Lock lock;
     public List<Grupo> espera =  new ArrayList<>();
     public List<Camareira> camareiras;
-    public List<Thread> threads = new ArrayList<>();
 
     public Hotel(List<Grupo> grupos, List<Quarto> quartos) {
 
@@ -18,46 +17,41 @@ public class Hotel {
         this.recepcionistas = criarRecepcionista(5);
         this.grupos = grupos;
 
-        if(camareiras != null && recepcionistas != null){
-        this.threads.addAll(camareiras);
-        this.threads.addAll(recepcionistas);
-        }
+//        if(camareiras != null && recepcionistas != null){
+//        this.threads.addAll(camareiras);
+//        this.threads.addAll(recepcionistas);
+//        }
 
 
         this.lock = new ReentrantLock();
 
         // Inicializa os grupos no início
-        for (Grupo grupo : grupos) {
-            if (grupo.getListaHospedes().size() > 4) {
-                dividirGruposHospedes(grupo);
-            }
-//            System.out.println(grupo.getListaHospedes());
-//            System.out.println(grupos.size() + "grupos");
-        }
+//        for (Grupo grupo : grupos) {
+//            if (grupo.getListaHospedes().size() > 4) {
+//                dividirGruposHospedes(grupo);
+//            }
+////            System.out.println(grupo.getListaHospedes());
+////            System.out.println(grupos.size() + "grupos");
+//        }
+//
+//        for (Thread thread : threads) {
+//            try {
+//                thread.join(); // Aguarda a conclusão de cada thread
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
-        for (Thread thread : threads) {
-            try {
-                thread.join(); // Aguarda a conclusão de cada thread
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        irPassear();
 
-
+//        for(Grupo grupo: grupos){
+//            System.out.println("IIIIIIIIIII" + grupo.getGroupId());
+//            grupo.irPassear();
+//        }
 
         
     }
 
-    public void irPassear(){
 
-        for(Quarto quarto : quartos) {
-            quarto.devolverChave();
-//            for(Camareira camareira: camareiras){
-//                camareira.limparQuarto(quarto);
-//            }
-        }
-    }
 
     public Grupo procurarGrupo() {
         if (grupos != null) {
@@ -82,21 +76,27 @@ public class Hotel {
     }
 
     public void alocarHospedes(Grupo grupoHospedes, Quarto quarto) {
-        if (grupoHospedes != null && quarto != null) {
-            if (quarto.getHospedes().size() + grupoHospedes.getListaHospedes().size() <= 4) {
+        if (quarto != null && quarto.getHospedes().isEmpty() && grupoHospedes.getListaHospedes().size() <= 4) {
+            lock.lock(); // Adquire o bloqueio antes de acessar a região crítica
+            try {
                 quarto.getHospedes().addAll(grupoHospedes.getListaHospedes());
                 grupoHospedes.estaAlocado = true;
                 grupoHospedes.estaComChave = true;
                 grupoHospedes.numeroQuarto = quarto.getNumero();
-                System.out.println("Hóspedes alocados no quarto " + quarto.getNumero() + " do grupo " + grupoHospedes.getId());
+                System.out.println("Hóspedes do grupo " + grupoHospedes.getId() +" alocados no quarto " + quarto.getNumero());
                 grupoHospedes.tentativas++;
-            } else {
-                System.out.println("Não foi possível alocar os hóspedes do grupo " + grupoHospedes.getId() + ": o quarto está cheio.");
+
+                grupoHospedes.irPassear();
+
+            } finally {
+                lock.unlock(); // Libera o bloqueio após a conclusão da operação na região crítica
             }
         } else {
-            System.out.println("Não foi possível alocar os hóspedes do grupo " + grupoHospedes.getId() + ": quarto ou grupo inválido.");
+            System.out.println("Não foi possível alocar os hóspedes do grupo " + grupoHospedes.getId() + ": o quarto está cheio ou não existe.");
         }
     }
+
+
 
 
     public Quarto procurarQuarto() {

@@ -10,6 +10,8 @@ public class Main {
         List<Quarto> quartos = criarQuartos(10);
 
         Hotel hotel = new Hotel(grupos, quartos);
+
+
     }
 
     public static List<Grupo> criarGrupos(List<Hospede> hospedes){
