@@ -14,9 +14,11 @@ public class Recepcionista extends Thread {
     }
 
     public void run() {
+
         while (true) {
+//            System.out.println(hotel.grupos);
             Grupo grupo = hotel.procurarGrupo();
-            Grupo grupoEspera = hotel.procurarGrupoListaEspera();
+//            Grupo grupoEspera = hotel.procurarGrupoListaEspera();
             Quarto quarto = hotel.procurarQuarto();
 
             if (grupo == null) {
@@ -27,23 +29,32 @@ public class Recepcionista extends Thread {
                 for(int i = 0; i < hotel.grupos.size(); i++){
                     if(hotel.grupos.get(i).getId() == grupo.getId()){
                         hotel.grupos.get(i).tentativas ++;
-                        System.out.println("O grupo " + hotel.grupos.get(i).getId() + " não pode ser alocado e foi passear");
-                        hotel.espera.add(hotel.grupos.get(i));
+                        if(grupo.tentativas < 2) {
+                            System.out.println("O grupo " + hotel.grupos.get(i).getId() + " não pode ser alocado e foi passear");
+                        }else{
+                            System.out.println("O grupo " + hotel.grupos.get(i).getId() + " não pode ser alocado e foi embora");
+                            grupo.irEmbora();
+                            //ir embora
 
-                        hotel.grupos.remove(i);
+                        }
+                        hotel.espera.add(hotel.grupos.get(i));
+//                        hotel.grupos.remove(i);
+                        //nao é pra remover
                     }
                 }
             } else {
-                System.out.println("Grupo encontrado: " + grupo.getId());
-                System.out.println("Quarto encontrado: " + quarto.getNumero());
-                hotel.lock.lock();
-                try {
-                    hotel.alocarHospedes(grupo, quarto);
-                } catch (Exception e) {
-                    System.err.println("Erro ao alocar hospedes: " + e.getMessage());
-                } finally {
-                    // Garanta que o unlock seja chamado mesmo em caso de exceção
-                    hotel.lock.unlock();
+                if(grupo.irEmbora == false) {
+                    System.out.println("Grupo encontrado: " + grupo.getId());
+                    System.out.println("Quarto encontrado: " + quarto.getNumero());
+                    hotel.lock.lock();
+                    try {
+                        hotel.alocarHospedes(grupo, quarto);
+                    } catch (Exception e) {
+                        System.err.println("Erro ao alocar hospedes: " + e.getMessage());
+                    } finally {
+
+                        hotel.lock.unlock();
+                    }
                 }
             }
         }

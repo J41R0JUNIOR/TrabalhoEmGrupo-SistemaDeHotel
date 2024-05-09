@@ -50,6 +50,8 @@ public class Main {
         return grupos;
     }
 
+
+
     public static List<Hospede> criarHospedes(int quantidade) {
         List<Hospede> criandoHospedes = new ArrayList<>();
         for (int i = 1; i <= quantidade; i++) {

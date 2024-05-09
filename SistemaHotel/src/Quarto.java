@@ -50,6 +50,11 @@ public class Quarto {
         }
     }
 
+    public void resetarQuarto(){
+        this.limpo = false;
+        this.hospedes = new ArrayList<>();
+    }
+
     public int getNumero() {
         return numero;
     }

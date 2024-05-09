@@ -19,37 +19,71 @@ public class Grupo extends Thread {
 
     public void run() {
 
-        while (true) {
+        while (!irEmbora) {
 //            System.out.println("cornoooooo");
             irPassear();
+//            irEmbora();
+
+//            try {
+//                Thread.sleep(3000);
+//                irEmbora();
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+            //last time
         }
+
+        try {
+            Thread.sleep(3000);
+            irEmbora();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+    public void irEmbora(){
+        System.out.println("Grupo " + id + " indo embora...");
+        irEmbora = true;
 
     }
 
     public void irPassear(){
 
-//        System.out.println(id + "esta alocado?" + estaAlocado);
+        System.out.println(id + "esta alocado?" + estaAlocado);
         if (estaAlocado) {
-//            System.out.println(id + "esta alocado? entrou no if" );
+            System.out.println(id + "esta alocado? entrou no if" );
                 if (estaComChave) {
-                    estaComChave = false;
-                    try {
-                        Thread.sleep(3000);
+                    deixarChave();
+                    pegarChave();
+//                    try {
+//                        Thread.sleep(3000);
                         System.out.println("Grupo " + id + " está indo passear.");
-                        Thread.sleep(3000);
-
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+//                        Thread.sleep(3000);
+//
+//                    } catch (InterruptedException e) {
+//                        throw new RuntimeException(e);
+//                    }
 
 //                    System.out.println("Grupo " + id + " está indo passear.");
-                    System.out.println("Grupo " + id + " está voltando do passeio");
-                    estaComChave = true;
+//                    System.out.println("Grupo " + id + " está voltando do passeio");
+
                 }
 
         } else {
 //                System.out.println("grupo nao pode passear");
         }
+    }
+
+    public void pegarChave(){
+        estaComChave = true;
+        System.out.println("Grupo " + id + " está voltando do passeio");
+    }
+
+    public void deixarChave(){
+        estaComChave = false;
+        System.out.println("Grupo " + id + " está indo passear.");
     }
 
     public Boolean getEstaAlocado() {

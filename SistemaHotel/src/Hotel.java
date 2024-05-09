@@ -56,8 +56,13 @@ public class Hotel {
     public Grupo procurarGrupo() {
         if (grupos != null) {
             for (Grupo grupo : grupos) {
-                if (!grupo.getEstaAlocado()) {
+                if (!grupo.getEstaAlocado() && grupo.tentativas < 2 && grupo.estaComChave == false && grupo.numeroQuarto == 0 && grupo.irEmbora == false) {
                     return grupo;
+                }else if(grupo.irEmbora == true){
+                    desalocarHospedes(grupo.numeroQuarto);
+                    grupos.remove(grupo);
+                    System.out.println(grupos);
+
                 }
             }
         }
@@ -76,7 +81,7 @@ public class Hotel {
     }
 
     public void alocarHospedes(Grupo grupoHospedes, Quarto quarto) {
-        if (quarto != null && quarto.getHospedes().isEmpty() && grupoHospedes.getListaHospedes().size() <= 4) {
+        if (quarto != null && quarto.getHospedes().isEmpty() && grupoHospedes.getListaHospedes().size() <= 4 ) {
             lock.lock(); // Adquire o bloqueio antes de acessar a região crítica
             try {
                 quarto.getHospedes().addAll(grupoHospedes.getListaHospedes());
@@ -86,7 +91,7 @@ public class Hotel {
                 System.out.println("Hóspedes do grupo " + grupoHospedes.getId() +" alocados no quarto " + quarto.getNumero());
                 grupoHospedes.tentativas++;
 
-                grupoHospedes.irPassear();
+//                grupoHospedes.irPassear();
 
             } finally {
                 lock.unlock(); // Libera o bloqueio após a conclusão da operação na região crítica
@@ -95,6 +100,23 @@ public class Hotel {
             System.out.println("Não foi possível alocar os hóspedes do grupo " + grupoHospedes.getId() + ": o quarto está cheio ou não existe.");
         }
     }
+
+    public void desalocarHospedes(int numeroQuarto) {
+        for (Quarto quarto : quartos) {
+            if (quarto.getNumero() == numeroQuarto) {
+                lock.lock();
+                try {
+                    quarto.resetarQuarto(); // Limpa o quarto, removendo os hóspedes
+                    System.out.println("Quarto " + numeroQuarto + " foi desocupado.");
+                } finally {
+                    lock.unlock();
+                }
+                return; // Para a execução após encontrar e desocupar o quarto
+            }
+        }
+        System.out.println("Quarto " + numeroQuarto + " não encontrado.");
+    }
+
 
 
 
