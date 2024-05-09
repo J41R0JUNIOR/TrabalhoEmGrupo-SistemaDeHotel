@@ -16,15 +16,31 @@ public class Hotel {
         System.out.println(grupos);
         System.out.println(quartos);
 
+        dividirGruposHospedes(grupos.get(0));
+
+
+
     }
 
-    private void dividirGruposHospedes(Grupo grupo) {
-        List<Hospede> hospedes = new ArrayList<>();
+    public void dividirGruposHospedes(Grupo grupo) {
+        List<Hospede> hospedes = grupo.getListaHospedes();
+        int numHospedesPorGrupo = 4;
+        int numNovosGrupos = (int) Math.ceil((double) hospedes.size() / numHospedesPorGrupo);
 
-        for(int i = 0; i < 4; i++){
-            
+        for (int i = 0; i < numNovosGrupos; i++) {
+            int startIndex = i * numHospedesPorGrupo;
+            int endIndex = Math.min(startIndex + numHospedesPorGrupo, hospedes.size());
+            List<Hospede> hospedesDoGrupo = hospedes.subList(startIndex, endIndex);
+
+            if (!hospedesDoGrupo.isEmpty()) {
+                Grupo novoGrupo = new Grupo(grupo.getId(), hospedesDoGrupo);
+
+                grupos.add(novoGrupo);
+
+
+
+            }
         }
-//        Grupo novoGrupo = new Grupo(grupo.getId(),)
     }
 }
 
