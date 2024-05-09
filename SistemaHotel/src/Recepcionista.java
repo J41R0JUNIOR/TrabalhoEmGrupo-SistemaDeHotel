@@ -15,14 +15,19 @@ public class Recepcionista extends Thread {
     public void run() {
         while (true) {
             Grupo grupo = hotel.procurarGrupo();
+            Grupo grupoEspera = hotel.procurarGrupoListaEspera();
             Quarto quarto = hotel.procurarQuarto();
+
             if (grupo == null) {
                 System.out.println("Não há mais grupos não alocados.");
                 break; // Se não houver grupos não alocados, saia do loop
-            } else if (quarto == null) {
+            }
+            else if (quarto == null) {
                 System.out.println("Não foi possível encontrar um quarto para o grupo " + grupo.getId());
                 for(int i = 0; i < hotel.grupos.size(); i++){
                     if(hotel.grupos.get(i).getId() == grupo.getId()){
+                        hotel.grupos.get(i).tentativas ++;
+                        System.out.println("O grupo " + hotel.grupos.get(i).getId() + " não pode ser alocado e foi passear");
                         hotel.espera.add(hotel.grupos.get(i));
                         
                         hotel.grupos.remove(i);
@@ -30,6 +35,7 @@ public class Recepcionista extends Thread {
                 }
 //                break; // Se não houver quartos disponíveis, saia do loop
             } else {
+
                 System.out.println("Há grupos ainda");
                 hotel.lock.lock();
                 try {
@@ -44,9 +50,4 @@ public class Recepcionista extends Thread {
             }
         }
     }
-
-
-
-
-
 }

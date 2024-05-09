@@ -38,12 +38,24 @@ public class Hotel {
         return null;
     }
 
+    public Grupo procurarGrupoListaEspera() {
+        if (espera != null) {
+            for (Grupo grupo : espera) {
+                if (!grupo.getEstaAlocado()) {
+                    return grupo;
+                }
+            }
+        }
+        return null;
+    }
+
     public void alocarHospedes(Grupo grupoHospedes, Quarto quarto) {
         if (grupoHospedes != null && quarto != null) {
             if (quarto.getHospedes().size() + grupoHospedes.getListaHospedes().size() <= 4) {
                 quarto.getHospedes().addAll(grupoHospedes.getListaHospedes());
                 grupoHospedes.estaAlocado = true;
                 System.out.println("Hóspedes alocados no quarto " + quarto.getNumero() + " do grupo " + grupoHospedes.getId());
+                grupoHospedes.tentativas++;
             } else {
                 System.out.println("Não foi possível alocar os hóspedes do grupo " + grupoHospedes.getId() + ": o quarto está cheio.");
             }
