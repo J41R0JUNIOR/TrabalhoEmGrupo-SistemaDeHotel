@@ -6,7 +6,7 @@ public class Quarto {
     private final int numero;
     private final int capacidadeMaxima = 4;
     private ArrayList<Hospede> hospedes;
-    private boolean limpo;
+    public boolean limpo;
     private final Lock lock;
 
     public Quarto(int numero) {
@@ -16,6 +16,17 @@ public class Quarto {
 //        System.out.println("Quarto " + numero + " criado!");
 
         this.lock = new ReentrantLock();
+    }
+
+    public void devolverChave() {
+        // Imprime uma mensagem indicando que os hóspedes devolveram a chave na recepção
+        System.out.println("Os hóspedes do quarto " + numero
+                + " devolveram a chave na recepção e foram passear.");
+        limpo = false;
+        if (limpo == false) {
+            System.out.println("Hóspedes do quarto " + numero
+                    + " pegaram a chave na recepção e voltaram pro quarto.");
+        }
     }
 
     public int getNumero() {

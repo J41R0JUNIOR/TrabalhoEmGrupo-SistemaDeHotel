@@ -9,12 +9,14 @@ public class Hotel {
     public List<Grupo> grupos;
     public Lock lock;
     public List<Grupo> espera =  new ArrayList<>();
+    public List<Camareira> camareiras;
 
     public Hotel(List<Grupo> grupos, List<Quarto> quartos) {
 
         this.quartos = quartos;
         this.recepcionistas = criarRecepcionista(5);
         this.grupos = grupos;
+
         this.lock = new ReentrantLock();
 
         // Inicializa os grupos no início
@@ -23,7 +25,20 @@ public class Hotel {
                 dividirGruposHospedes(grupo);
             }
 //            System.out.println(grupo.getListaHospedes());
-            System.out.println(grupos.size() + "grupos");
+//            System.out.println(grupos.size() + "grupos");
+        }
+
+
+        irPassear();
+
+
+        
+    }
+
+    public void irPassear(){
+
+        for(Quarto quarto : quartos) {
+            quarto.devolverChave();
         }
     }
 
@@ -54,6 +69,8 @@ public class Hotel {
             if (quarto.getHospedes().size() + grupoHospedes.getListaHospedes().size() <= 4) {
                 quarto.getHospedes().addAll(grupoHospedes.getListaHospedes());
                 grupoHospedes.estaAlocado = true;
+                grupoHospedes.estaComChave = true;
+                grupoHospedes.numeroQuarto = quarto.getNumero();
                 System.out.println("Hóspedes alocados no quarto " + quarto.getNumero() + " do grupo " + grupoHospedes.getId());
                 grupoHospedes.tentativas++;
             } else {
@@ -88,7 +105,7 @@ public class Hotel {
             List<Hospede> hospedesDoGrupo = hospedes.subList(startIndex, endIndex);
 
             if (!hospedesDoGrupo.isEmpty()) {
-                Grupo novoGrupo = new Grupo(grupo.getId(), hospedesDoGrupo);
+                Grupo novoGrupo = new Grupo(grupo.getGroupId(), hospedesDoGrupo, 0);
                 novosGrupos.add(novoGrupo);
             }
         }
@@ -103,6 +120,15 @@ public class Hotel {
         }
         return criandoRecepcionistas;
     }
+
+    public  List<Camareira> criarCamareiras(int quantidade) {
+        List<Camareira> criandoCamareiras = new ArrayList<>();
+        for (int i = 1; i <= quantidade; i++) {
+            criandoCamareiras.add(new Camareira(i, this));
+        }
+        return criandoCamareiras;
+    }
+
 
     public List<Grupo> getGrupos() {
         return grupos;

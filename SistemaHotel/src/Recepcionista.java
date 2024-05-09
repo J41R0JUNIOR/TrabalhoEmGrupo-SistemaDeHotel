@@ -46,6 +46,7 @@ public class Recepcionista extends Thread {
                     System.err.println("Erro ao alocar hospedes: " + e.getMessage());
                 } finally {
                     hotel.lock.unlock();
+
                 }
             }
         }

@@ -1,17 +1,23 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Grupo extends Thread {
     public List<Hospede> listaHospedes;
     private Integer id;
     public Boolean estaAlocado = false;
     public Integer tentativas = 0;
+    public Boolean estaComChave = false;
+    public int numeroQuarto;
 
-    public Grupo(Integer id, List<Hospede> listaHospedes) {
+    public Grupo(Integer id, List<Hospede> listaHospedes, int numeroQuarto) {
         this.listaHospedes = listaHospedes;
+        this.numeroQuarto = numeroQuarto;
         this.id = id;
         this.start(); // Iniciar a execução da thread
     }
 
     @Override
-   public void run() {
+    public void run() {
         while (true) {
             if (estaAlocado) {
                 try {
@@ -20,6 +26,8 @@ public class Grupo extends Thread {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            } else {
+                // Lógica para quando o grupo não está alocado
             }
         }
     }
@@ -28,7 +36,7 @@ public class Grupo extends Thread {
         return estaAlocado;
     }
 
-    public Integer getId() {
+    public Integer getGroupId() {
         return id;
     }
 

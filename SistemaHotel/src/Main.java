@@ -36,7 +36,7 @@ public class Main {
                     hospedesGrupo.add(hospedes.remove(0)); // Remove e adiciona o primeiro hóspede da lista
                 }
 
-                Grupo novoGrupo = new Grupo(indexGroupId, hospedesGrupo);
+                Grupo novoGrupo = new Grupo(indexGroupId, hospedesGrupo, 0);
 
                 grupos.add(novoGrupo);
 
