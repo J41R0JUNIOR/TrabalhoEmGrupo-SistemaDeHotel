@@ -5,14 +5,12 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Quarto {
     private final int numero;
     private final int capacidadeMaxima = 4;
-    private int ocupacaoAtual;
     private ArrayList<Hospede> hospedes;
     private boolean limpo;
     private final Lock lock;
 
     public Quarto(int numero) {
         this.numero = numero;
-        this.ocupacaoAtual = 0;
         this.limpo = false;
 //        System.out.println("Quarto " + numero + " criado!");
 
@@ -25,14 +23,6 @@ public class Quarto {
 
     public int getCapacidadeMaxima() {
         return capacidadeMaxima;
-    }
-
-    public int getOcupacaoAtual() {
-        return ocupacaoAtual;
-    }
-
-    public void setOcupacaoAtual(int ocupacaoAtual) {
-        this.ocupacaoAtual = ocupacaoAtual;
     }
 
     public ArrayList<Hospede> getHospedes() {

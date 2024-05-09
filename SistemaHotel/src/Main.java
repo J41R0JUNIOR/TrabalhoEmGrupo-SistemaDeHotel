@@ -7,10 +7,9 @@ public class Main {
 
         List<Hospede> hospedes = criarHospedes(50);
         List<Grupo> grupos = criarGrupos(hospedes);
-        List<Recepcionista> recepcionistas = criarRecepcionista(5);
         List<Quarto> quartos = criarQuartos(10);
 
-        Hotel hotel = new Hotel(recepcionistas, grupos, quartos);
+        Hotel hotel = new Hotel(grupos, quartos);
     }
 
     public static List<Grupo> criarGrupos(List<Hospede> hospedes){
@@ -57,13 +56,6 @@ public class Main {
         return criandoHospedes;
     }
 
-    public static List<Recepcionista> criarRecepcionista(int quantidade) {
-        List<Recepcionista> criandoRecepcionistas = new ArrayList<>();
-        for (int i = 1; i <= quantidade; i++) {
-            criandoRecepcionistas.add(new Recepcionista(i));
-        }
-        return criandoRecepcionistas;
-    }
 
     public static List<Quarto> criarQuartos(int quantidade) {
         List<Quarto> criandoQuartos = new ArrayList<>();
