@@ -15,7 +15,7 @@ public class Recepcionista extends Thread {
     }
 
     public void run() {
-        System.out.println("Recepcionista " + id + " começou o turno");
+//        System.out.println("Recepcionista " + id + " começou o turno");
     }
 
 

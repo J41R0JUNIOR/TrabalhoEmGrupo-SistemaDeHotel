@@ -12,17 +12,22 @@ public class Hotel {
         this.recepcionistas = recepcionistas;
         this.quartos = quartos;
         this.grupos = grupos;
-        System.out.println(recepcionistas);
-        System.out.println(grupos);
-        System.out.println(quartos);
+//        System.out.println(recepcionistas);
+//        System.out.println(grupos);
+//        System.out.println(quartos);
 
-        dividirGruposHospedes(grupos.get(0));
-
-
+        for(Grupo grupo: grupos){
+            if(grupo.getListaHospedes().size() > 4){
+                dividirGruposHospedes(grupo);
+            }
+            System.out.println("procurando");
+            System.out.println(grupo.getListaHospedes());
+        }
 
     }
 
     public void dividirGruposHospedes(Grupo grupo) {
+        System.out.println("dividindo");
         List<Hospede> hospedes = grupo.getListaHospedes();
         int numHospedesPorGrupo = 4;
         int numNovosGrupos = (int) Math.ceil((double) hospedes.size() / numHospedesPorGrupo);
@@ -34,11 +39,8 @@ public class Hotel {
 
             if (!hospedesDoGrupo.isEmpty()) {
                 Grupo novoGrupo = new Grupo(grupo.getId(), hospedesDoGrupo);
-
+                System.out.println(novoGrupo.getListaHospedes() + "novo grupo");
                 grupos.add(novoGrupo);
-
-
-
             }
         }
     }
