@@ -10,12 +10,19 @@ public class Hotel {
     public Lock lock;
     public List<Grupo> espera =  new ArrayList<>();
     public List<Camareira> camareiras;
+    public List<Thread> threads = new ArrayList<>();
 
     public Hotel(List<Grupo> grupos, List<Quarto> quartos) {
 
         this.quartos = quartos;
         this.recepcionistas = criarRecepcionista(5);
         this.grupos = grupos;
+
+        if(camareiras != null && recepcionistas != null){
+        this.threads.addAll(camareiras);
+        this.threads.addAll(recepcionistas);
+        }
+
 
         this.lock = new ReentrantLock();
 
@@ -28,8 +35,15 @@ public class Hotel {
 //            System.out.println(grupos.size() + "grupos");
         }
 
-
+        for (Thread thread : threads) {
+            try {
+                thread.join(); // Aguarda a conclusão de cada thread
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         irPassear();
+
 
 
         
@@ -39,6 +53,9 @@ public class Hotel {
 
         for(Quarto quarto : quartos) {
             quarto.devolverChave();
+            for(Camareira camareira: camareiras){
+                camareira.limparQuarto(quarto);
+            }
         }
     }
 

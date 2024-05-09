@@ -23,10 +23,15 @@ public class Quarto {
         System.out.println("Os hóspedes do quarto " + numero
                 + " devolveram a chave na recepção e foram passear.");
         limpo = false;
-        if (limpo == false) {
-            System.out.println("Hóspedes do quarto " + numero
-                    + " pegaram a chave na recepção e voltaram pro quarto.");
+
+        while (!limpo){
+            System.out.println("Hóspedes do quarto " + numero + " esperando");
         }
+
+//        if (limpo == false) {
+//            System.out.println("Hóspedes do quarto " + numero
+//                    + " pegaram a chave na recepção e voltaram pro quarto.");
+//        }
     }
 
     public int getNumero() {
