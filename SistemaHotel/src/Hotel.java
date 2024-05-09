@@ -8,6 +8,7 @@ public class Hotel {
     public List<Quarto> quartos;
     public List<Grupo> grupos;
     public Lock lock;
+    public List<Grupo> espera =  new ArrayList<>();
 
     public Hotel(List<Grupo> grupos, List<Quarto> quartos) {
 
@@ -21,7 +22,8 @@ public class Hotel {
             if (grupo.getListaHospedes().size() > 4) {
                 dividirGruposHospedes(grupo);
             }
-            System.out.println(grupo.getListaHospedes());
+//            System.out.println(grupo.getListaHospedes());
+            System.out.println(grupos.size() + "grupos");
         }
     }
 
@@ -29,7 +31,6 @@ public class Hotel {
         if (grupos != null) {
             for (Grupo grupo : grupos) {
                 if (!grupo.getEstaAlocado()) {
-                    System.out.println("Grupo nao alocado encontrado: " + grupo.getId());
                     return grupo;
                 }
             }
@@ -38,8 +39,8 @@ public class Hotel {
     }
 
     public void alocarHospedes(Grupo grupoHospedes, Quarto quarto) {
-        if (quarto != null && grupoHospedes != null) {
-            if (quarto.getHospedes().size() < 4) {
+        if (grupoHospedes != null && quarto != null) {
+            if (quarto.getHospedes().size() + grupoHospedes.getListaHospedes().size() <= 4) {
                 quarto.getHospedes().addAll(grupoHospedes.getListaHospedes());
                 grupoHospedes.estaAlocado = true;
                 System.out.println("Hóspedes alocados no quarto " + quarto.getNumero() + " do grupo " + grupoHospedes.getId());
@@ -51,10 +52,11 @@ public class Hotel {
         }
     }
 
+
     public Quarto procurarQuarto() {
         for (Quarto quarto : quartos) {
             if (quarto != null && (quarto.getHospedes() == null || quarto.getHospedes().isEmpty())) {
-                System.out.println("Encontrou um quarto vazio");
+//                System.out.println("Encontrou um quarto vazio");
                 return quarto;
             }
         }

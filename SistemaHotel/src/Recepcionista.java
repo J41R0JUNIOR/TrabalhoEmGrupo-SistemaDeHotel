@@ -16,18 +16,25 @@ public class Recepcionista extends Thread {
         while (true) {
             Grupo grupo = hotel.procurarGrupo();
             Quarto quarto = hotel.procurarQuarto();
-            if (grupo == null || quarto == null) {
+            if (grupo == null) {
                 System.out.println("Não há mais grupos não alocados.");
                 break; // Se não houver grupos não alocados, saia do loop
-            }else {
+            } else if (quarto == null) {
+                System.out.println("Não foi possível encontrar um quarto para o grupo " + grupo.getId());
+                for(int i = 0; i < hotel.grupos.size(); i++){
+                    if(hotel.grupos.get(i).getId() == grupo.getId()){
+                        hotel.espera.add(hotel.grupos.get(i));
+                        
+                        hotel.grupos.remove(i);
+                    }
+                }
+//                break; // Se não houver quartos disponíveis, saia do loop
+            } else {
                 System.out.println("Há grupos ainda");
                 hotel.lock.lock();
                 try {
-                    System.out.println("Entrou no try");
-
                     System.out.println("encontrou um quarto numero " + quarto.getNumero());
-                        hotel.alocarHospedes(grupo, quarto);
-
+                    hotel.alocarHospedes(grupo, quarto);
 
                 } catch (Exception e) {
                     System.err.println("Erro ao alocar hospedes: " + e.getMessage());
@@ -36,8 +43,8 @@ public class Recepcionista extends Thread {
                 }
             }
         }
-//        System.out.println("Recepcionista " + id + " começou o turno");
     }
+
 
 
 
