@@ -90,8 +90,13 @@ public class Hotel {
                 grupoHospedes.numeroQuarto = quarto.getNumero();
                 System.out.println("Hóspedes alocados no quarto " + quarto.getNumero() + " do grupo " + grupoHospedes.getId());
                 grupoHospedes.tentativas++;
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
-                System.out.println("Não foi possível alocar os hóspedes do grupo " + grupoHospedes.getId() + ": o quarto está cheio.");
+                System.out.println("Não foi possível alocar os hóspedes do grupo " + grupoHospedes.getId() + ": o quarto " + quarto.getNumero() + " está cheio.");
             }
         } else {
             System.out.println("Não foi possível alocar os hóspedes do grupo " + grupoHospedes.getId() + ": quarto ou grupo inválido.");
