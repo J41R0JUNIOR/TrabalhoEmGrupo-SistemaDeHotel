@@ -6,67 +6,64 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Hotel {
-    // Representa o número máximo de hóspedes por quarto
-    public static final int NUMERO_MAXIMO_HOSPEDES = 4;
-    // Lista de quartos do hotel
-    private List<Quarto> quartos;
-    // Fila de espera para grupos de hóspedes
-    private BlockingQueue<List<Hospede>> filaEspera;
+    // Represents the maximum number of guests per room
+    public static final int MAX_GUESTS_PER_ROOM = 4;
+    // List of hotel rooms
+    private List<Room> rooms;
+    // Waiting queue for groups of guests
+    private BlockingQueue<List<Guest>> waitingQueue;
     static Lock lock = new ReentrantLock(); // Locks
 
-    public Hotel(int numQuartos) {
-        // Inicializa a lista de quartos
-        quartos = new ArrayList<>();
-        // Cria os quartos e adiciona à lista
-        for (int i = 1; i <= numQuartos; i++) {
-            Quarto quarto = new Quarto(i);
-            quartos.add(quarto);
-            System.out.println(
-                    "\n-------------------------------------------------\nQuarto número " + i + " foi criado.");
+    public Hotel(int numRooms) {
+        // Initialize the list of rooms
+        rooms = new ArrayList<>();
+        // Create the rooms and add them to the list
+        for (int i = 1; i <= numRooms; i++) {
+            Room room = new Room(i);
+            rooms.add(room);
+            System.out.println("\n-------------------------------------------------\nRoom number " + i + " has been created.");
         }
-        // Inicializa a fila de espera com capacidade para 10 grupos de hóspedes
-        filaEspera = new ArrayBlockingQueue<>(10);
+        // Initialize the waiting queue with capacity for 10 groups of guests
+        waitingQueue = new ArrayBlockingQueue<>(10);
     }
 
-    public synchronized Quarto alocaQuarto(List<Hospede> grupoHospedes) throws InterruptedException {
+    public synchronized Room allocateRoom(List<Guest> guestGroup) throws InterruptedException {
         lock.lock();
         try {
-            // Método para alocar um quarto para um grupo de hóspedes
-            for (Quarto quarto : quartos) {
-                // Verifica se o quarto está vago
-                if (quarto.estaVago()) {
-                    // Adiciona o grupo de hóspedes ao quarto
-                    quarto.adicionarHospedes(grupoHospedes);
-                    return quarto;
+            // Method to allocate a room for a group of guests
+            for (Room room : rooms) {
+                // Check if the room is vacant
+                if (room.isVacant()) {
+                    // Add the group of guests to the room
+                    room.addGuests(guestGroup);
+                    return room;
                 }
             }
-            // Se todos os quartos estiverem ocupados, adiciona o grupo à fila de espera
-            System.out.println(
-                    "\n-------------------------------------------------\nTodos os quartos estão ocupados. O grupo "
-                            + grupoHospedes.get(0).getNumeroGrupo() +
-                            " será colocado na fila de espera.");
-            filaEspera.put(grupoHospedes);
-            return null; // ou lançar uma exceção indicando que não há quartos disponíveis
+            // If all rooms are occupied, add the group to the waiting queue
+            System.out.println("\n-------------------------------------------------\nAll rooms are occupied. Group " + guestGroup.get(0).getGroupNumber() +
+                    " will be placed in the waiting queue.");
+            waitingQueue.put(guestGroup);
+            return null; // or throw an exception indicating that there are no available rooms
         } finally {
             lock.unlock();
         }
     }
 
-    // Método para liberar um quarto ocupado por um grupo de hóspedes
-    public synchronized void liberarQuarto(List<Hospede> grupoHospedes) {
+    // Method to release a room occupied by a group of guests
+    public synchronized void releaseRoom(List<Guest> guestGroup) {
         lock.lock();
         try {
-            for (Quarto quarto : quartos) {
-                // Verifica se o quarto contém todos os hóspedes do grupo
-                if (quarto.containsAllHospedes(grupoHospedes)) {
-                    // Remove o grupo de hóspedes do quarto
-                    quarto.removerHospedes(grupoHospedes);
-                    // Se o quarto ficar vago, verifica se há um grupo esperando para ocupá-lo
-                    if (quarto.estaVago()) {
-                        List<Hospede> proximoGrupo = filaEspera.poll();
-                        if (proximoGrupo != null) {
+            for (Room room : rooms) {
+                // Check if the room contains all guests from the group
+                if (room.containsAllGuests(guestGroup)) {
+                    // Remove the group of guests from the room
+                    room.removeGuests(guestGroup);
+                    // If the room becomes vacant, check if there's a group waiting to occupy it
+                    if (room.isVacant()) {
+                        List<Guest> nextGroup = waitingQueue.poll();
+                        if (nextGroup != null) {
                             try {
-                                alocaQuarto(proximoGrupo); // Aloca o quarto para o próximo grupo na fila de espera
+                                allocateRoom(nextGroup); // Allocate the room to the next group in the waiting queue
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -80,13 +77,13 @@ public class Hotel {
         }
     }
 
-    // Método para obter a lista de quartos do hotel
-    public synchronized List<Quarto> getQuartos() {
-        return quartos;
+    // Method to get the list of hotel rooms
+    public synchronized List<Room> getRooms() {
+        return rooms;
     }
 
-    // Método para obter o próximo grupo da fila de espera
-    public synchronized List<Hospede> getProximoGrupoFilaEspera() {
-        return filaEspera.poll();
+    // Method to get the next group from the waiting queue
+    public synchronized List<Guest> getNextGroupFromWaitingQueue() {
+        return waitingQueue.poll();
     }
 }
