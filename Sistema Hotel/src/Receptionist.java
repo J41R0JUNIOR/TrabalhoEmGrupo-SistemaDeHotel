@@ -36,14 +36,14 @@ public class Receptionist extends Thread {
             try {
                 // Get the number of members in the guest group
                 int numMembers = guestGroup.size();
-                System.out.println("\n-------------------------------------------------\n" + name
+                System.out.println("" + name
                         + " is checking in the guest group "
                         + guestGroup.get(0).getGroupNumber() +
                         ", which has " + numMembers + " members.");
 
                 // Check if the number of members is greater than the maximum number of members per room
                 if (numMembers > Hotel.MAX_GUESTS_PER_ROOM) {
-                    System.out.println("\n-------------------------------------------------\nThe group "
+                    System.out.println("The group "
                             + guestGroup.get(0).getGroupNumber()
                             + " is too large for a single room. Multiple rooms will be allocated.");
 
@@ -64,13 +64,12 @@ public class Receptionist extends Thread {
                 if (!waitingQueue.isEmpty()) {
                     List<Guest> nextGroup = waitingQueue.poll();
                     if (nextGroup != null && !nextGroup.isEmpty()) {
-                        System.out.println("\n-------------------------------------------------\nThe group "
+                        System.out.println("The group "
                                 + nextGroup.get(0).getGroupNumber() +
                                 " has been removed from the waiting queue.");
                         hotel.allocateRoom(nextGroup); // Allocate the next group from the waiting queue
                     } else {
-                        System.out.println(
-                                "\n-------------------------------------------------\nThere are no guest groups to remove from the waiting queue.");
+                        System.out.println("There are no guest groups to remove from the waiting queue.");
                     }
                 }
 
@@ -107,7 +106,7 @@ public class Receptionist extends Thread {
             int groupNumber = subgroup.get(0).getGroupNumber();
             int attempts = rentalAttempts.getOrDefault(groupNumber, 1);
             if (attempts >= 2) {
-                System.out.println("\n-------------------------------------------------\nThe group " + groupNumber
+                System.out.println("The group " + groupNumber
                         + " tried to rent a room twice and failed. They left a complaint and departed.");
                 waitingQueue.remove(subgroup); // Remove the group from the waiting queue
             } else {
@@ -125,14 +124,14 @@ public class Receptionist extends Thread {
                     }
                     // After exploring, try to rent a room again
                     if (subgroup.get(0).hasExplored()) {
-                        System.out.println("\n-------------------------------------------------\nThe group " + groupNumber
+                        System.out.println("The group " + groupNumber
                                 + " is exploring the city.");
                         Thread.sleep(3000);
-                        System.out.println("\n-------------------------------------------------\nThe group " + groupNumber
+                        System.out.println("The group " + groupNumber
                                 + " returned from exploring.");
                         room = hotel.allocateRoom(subgroup);
                         if (room == null) {
-                            System.out.println("\n-------------------------------------------------\nThe group "
+                            System.out.println("The group "
                                     + groupNumber
                                     + " tried to rent a room after exploring and failed. They left a complaint and departed.");
                             waitingQueue.remove(subgroup); // Remove the group from the waiting queue

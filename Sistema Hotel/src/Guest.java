@@ -34,7 +34,7 @@ public class Guest extends Thread { // Class representing a guest in a hotel
     // Static method to indicate that a group has returned to the room
     public static void returnGroupToRoom(int groupNumber) {
         // Prints a message indicating that the group has returned to the room
-        System.out.println("\n-------------------------------------------------\nGroup " + groupNumber + " has returned.");
+        System.out.println("Group " + groupNumber + " has returned.");
     }
 
     public void returnToRoom() {

@@ -40,7 +40,7 @@ public class Maid extends Thread {
                         // Checks if the room is ready for cleaning
                         if (room.isReadyForCleaning()) {
                             // Prints a message indicating that the maid is cleaning the room
-                            System.out.println("\n-------------------------------------------------\n" + name
+                            System.out.println("" + name
                                     + " is cleaning room " + room.getNumber() + ".");
                             // Cleans the room
                             room.clean();

@@ -22,7 +22,7 @@ public class Room {
     // Method to return the room key at the reception
     public void returnKey() {
         // Prints a message indicating that the guests returned the key at the reception
-        System.out.println("\n-------------------------------------------------\nGuests of room " + number
+        System.out.println("Guests of room " + number
                 + " returned the key at the reception and went out.");
         readyForCleaning = true;
         if (readyForCleaning == false) {
@@ -33,7 +33,7 @@ public class Room {
 
     public void takeKey() {
         if (readyForCleaning == false) {
-            System.out.println("\n-------------------------------------------------\nGuests of room " + number
+            System.out.println("Guests of room " + number
                     + " took the key at the reception and came back to the room.");
         }
     }
@@ -46,7 +46,7 @@ public class Room {
     // Method to clean the room
     public void clean() {
         // Prints a message indicating that the room has been cleaned
-        System.out.println("\n-------------------------------------------------\nRoom " + number + " has been cleaned.");
+        System.out.println("Room " + number + " has been cleaned.");
         readyForCleaning = false;
     }
 

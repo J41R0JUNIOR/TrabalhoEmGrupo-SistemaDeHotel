@@ -21,7 +21,7 @@ public class Hotel {
         for (int i = 1; i <= numRooms; i++) {
             Room room = new Room(i);
             rooms.add(room);
-            System.out.println("\n-------------------------------------------------\nRoom number " + i + " has been created.");
+            System.out.println("Room number " + i + " has been created.");
         }
         // Initialize the waiting queue with capacity for 10 groups of guests
         waitingQueue = new ArrayBlockingQueue<>(10);
@@ -40,7 +40,7 @@ public class Hotel {
                 }
             }
             // If all rooms are occupied, add the group to the waiting queue
-            System.out.println("\n-------------------------------------------------\nAll rooms are occupied. Group " + guestGroup.get(0).getGroupNumber() +
+            System.out.println("All rooms are occupied. Group " + guestGroup.get(0).getGroupNumber() +
                     " will be placed in the waiting queue.");
             waitingQueue.put(guestGroup);
             return null; // or throw an exception indicating that there are no available rooms

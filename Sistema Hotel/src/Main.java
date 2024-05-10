@@ -41,7 +41,7 @@ public class Main {
 
         // Simulates going out for a walk
         System.out
-                .println("\n-------------------------------------------------\nGuests are going out for a walk...");
+                .println("Guests are going out for a walk...");
         for (Room room : hotel.getRooms()) {
             room.returnKey(); // Returns the key at the reception when going out
         }
@@ -56,7 +56,7 @@ public class Main {
         }
 
         System.out.println(
-                "\n-------------------------------------------------\nAll guest groups have completed their stay.");
+                "All guest groups have completed their stay.");
 
         Maid.pause();
     }
