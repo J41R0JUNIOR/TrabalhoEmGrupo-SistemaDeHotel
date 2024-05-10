@@ -20,30 +20,25 @@ public class Grupo extends Thread {
     @Override
     public void run() {
         while (true) {
-            if (estaAlocado) {
-                irPassear();
-
+            if (estaAlocado && !estaPasseando) {
+                try {
+                    Thread.sleep(3000); // Espera por 3 segundos (3000 milissegundos)
+                    System.out.println("Grupo " + id + " está indo passear.");
+                    estaPasseando = true;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else if (estaAlocado && estaPasseando) {
+                try {
+                    Thread.sleep(2500);
+                    System.out.println("Grupo " + id + " está voltando do passeio.");
+                    estaPasseando = false;
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
                 // Lógica para quando o grupo não está alocado
             }
-        }
-    }
-
-    private void irPassear() {
-        try {
-            Thread.sleep(3000); // Espera por 3 segundos (3000 milissegundos)
-            System.out.println("Grupo " + id + " está indo passear.");
-            estaPasseando = true;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            Thread.sleep(2500);
-            System.out.println("Grupo " + id + " está voltando do passeio.");
-            estaPasseando = false;
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
     }
 

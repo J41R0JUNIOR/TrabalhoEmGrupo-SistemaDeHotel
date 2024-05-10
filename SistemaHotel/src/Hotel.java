@@ -33,6 +33,7 @@ public class Hotel {
             }
 //            System.out.println(grupo.getListaHospedes());
 //            System.out.println(grupos.size() + "grupos");
+
         }
 
         for (Thread thread : threads) {
@@ -46,7 +47,7 @@ public class Hotel {
 
 
 
-        
+
     }
 
     public void irPassear(){
