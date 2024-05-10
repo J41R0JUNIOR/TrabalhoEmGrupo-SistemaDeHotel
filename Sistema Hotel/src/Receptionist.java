@@ -140,7 +140,7 @@ public class Receptionist extends Thread {
                 }
             }
         } else {
-            System.out.println("\n-------------------------------------------------\nAllocating " + subgroup.size()
+            System.out.println("Allocating " + subgroup.size()
                     + " members of the group " + subgroup.get(0).getGroupNumber()
                     + " to room " + room.getNumber());
         }

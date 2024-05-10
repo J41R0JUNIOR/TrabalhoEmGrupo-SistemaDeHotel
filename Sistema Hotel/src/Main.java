@@ -11,6 +11,7 @@ public class Main {
         List<Thread> threads = new ArrayList<>();
         // Waiting queue for groups of guests
         BlockingQueue<List<Guest>> waitingQueue = new ArrayBlockingQueue<>(10);
+
         // Creates and starts threads for receptionists
         for (int i = 1; i <= 8; i++) {
             List<Guest> guestGroup = createGuestGroup(i);
@@ -21,6 +22,7 @@ public class Main {
             receptionist.start();
             threads.add(receptionist);
         }
+
         // Creates and starts threads for maids
         List<Maid> housekeepers = new ArrayList<>();
         for (int i = 0; i < 10; i++) { // Changed to 10 housekeepers
@@ -31,17 +33,17 @@ public class Main {
             housekeepers.add(housekeeper);
         }
 
+        // Waits for each thread to finish to show the rest
         for (Thread thread : threads) {
             try {
-                thread.join(); // Waits for each thread to finish
+                thread.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
 
         // Simulates going out for a walk
-        System.out
-                .println("Guests are going out for a walk...");
+        System.out.println("Guests are going out for a walk...");
         for (Room room : hotel.getRooms()) {
             room.returnKey(); // Returns the key at the reception when going out
         }
@@ -54,12 +56,10 @@ public class Main {
         for (Room room : hotel.getRooms()) {
             room.takeKey(); // Returns the key at the reception when going out
         }
-
-        System.out.println(
-                "All guest groups have completed their stay.");
-
+        System.out.println("All guest groups have completed their stay.");
         Maid.pause();
     }
+    
 
     public static List<Guest> createGuestGroup(int groupNumber) {
         Random random = new Random();

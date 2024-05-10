@@ -25,10 +25,10 @@ public class Room {
         System.out.println("Guests of room " + number
                 + " returned the key at the reception and went out.");
         readyForCleaning = true;
-        if (readyForCleaning == false) {
-            System.out.println("\n-------------------------------------------------\nGuests of room " + number
-                    + " took the key at the reception and came back to the room.");
-        }
+//        if (readyForCleaning == false) {
+//            System.out.println("\n-------------------------------------------------\nGuests of room " + number
+//                    + " took the key at the reception and came back to the room.");
+//        }
     }
 
     public void takeKey() {
