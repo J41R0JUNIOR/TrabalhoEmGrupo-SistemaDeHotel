@@ -12,14 +12,16 @@ public class Maid extends Thread {
     private List<Room> assignedRooms;
 
     public Maid(String name, List<Room> assignedRooms) {
+        super(name);
         this.name = name;
         this.assignedRooms = assignedRooms;
     }
 
     // Method to get the maid's name
-    public String getName() {
-        return name;
-    }
+//    public String getName() {
+//        return name;
+//    }
+
 
     // Static method to pause all maids
     public static void pause() {
