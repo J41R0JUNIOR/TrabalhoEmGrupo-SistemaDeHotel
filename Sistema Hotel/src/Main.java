@@ -6,72 +6,70 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 public class Main {
     public static void main(String[] args) {
-        Hotel hotel = new Hotel(10);// Cria uma instância do hotel com 10 quartos
-        // Lista para armazenar as threads
+        Hotel hotel = new Hotel(10);// Creates an instance of the hotel with 10 rooms
+        // List to store threads
         List<Thread> threads = new ArrayList<>();
-        // Fila de espera para grupos de hóspedes
-        BlockingQueue<List<Hospede>> filaEspera = new ArrayBlockingQueue<>(10);
-        // Cria e inicia as threads dos recepcionistas
+        // Waiting queue for groups of guests
+        BlockingQueue<List<Hospede>> waitingQueue = new ArrayBlockingQueue<>(10);
+        // Creates and starts threads for receptionists
         for (int i = 1; i <= 8; i++) {
-            List<Hospede> grupoHospedes = criarGrupoHospedes(i);
-            threads.addAll(grupoHospedes);
+            List<Hospede> guestGroup = createGuestGroup(i);
+            threads.addAll(guestGroup);
             int a = i % 5;
-            Recepcionista recepcionista = new Recepcionista("Atendimento nr: " + i + ", Recepcionista: " + a, hotel,
-                    grupoHospedes, filaEspera);
-            recepcionista.start();
-            threads.add(recepcionista);
+            Receptionist receptionist = new Receptionist("Service nr: " + i + ", Receptionist: " + a, hotel,
+                    guestGroup, waitingQueue);
+            receptionist.start();
+            threads.add(receptionist);
         }
-        // Cria e inicia as threads das camareiras
-        List<Camareira> camareiras = new ArrayList<>();
-        for (int i = 0; i < 10; i++) { // Alterado para 10 camareiras
-            List<Quarto> quartosResponsaveis = new ArrayList<>();
-            quartosResponsaveis.add(hotel.getQuartos().get(i)); // Cada camareira é responsável por um quarto
-            Camareira camareira = new Camareira("Camareira " + (i + 1), quartosResponsaveis);
-            camareira.start();
-            camareiras.add(camareira);
+        // Creates and starts threads for maids
+        List<Housekeeper> housekeepers = new ArrayList<>();
+        for (int i = 0; i < 10; i++) { // Changed to 10 housekeepers
+            List<Quarto> assignedRooms = new ArrayList<>();
+            assignedRooms.add(hotel.getQuartos().get(i)); // Each maid is responsible for one room
+            Housekeeper housekeeper = new Housekeeper("Housekeeper " + (i + 1), assignedRooms);
+            housekeeper.start();
+            housekeepers.add(housekeeper);
         }
 
         for (Thread thread : threads) {
             try {
-                thread.join(); // Aguarda a conclusão de cada thread
+                thread.join(); // Waits for each thread to finish
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
 
-        // Simula a saída para passear
+        // Simulates going out for a walk
         System.out
-                .println("\n-------------------------------------------------\nHóspedes estão saindo para passear...");
-        for (Quarto quarto : hotel.getQuartos()) {
-            quarto.devolverChave(); // Devolve a chave na recepção ao sair
-
+                .println("\n-------------------------------------------------\nGuests are going out for a walk...");
+        for (Quarto room : hotel.getQuartos()) {
+            room.returnKey(); // Returns the key at the reception when going out
         }
 
         try {
-            Thread.sleep(5000); // Simula o tempo que os hóspedes passam passeando (5 segundos)
+            Thread.sleep(5000); // Simulates the time guests spend walking (5 seconds)
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        for (Quarto quarto : hotel.getQuartos()) {
-            quarto.pegarChave(); // Devolve a chave na recepção ao sair
-
+        for (Quarto room : hotel.getQuartos()) {
+            room.takeKey(); // Returns the key at the reception when going out
         }
 
         System.out.println(
-                "\n-------------------------------------------------\nTodos os grupos de hóspedes concluíram sua estadia.");
+                "\n-------------------------------------------------\nAll guest groups have completed their stay.");
 
-        Camareira.pausar();
+        Housekeeper.pause();
     }
 
-    public static List<Hospede> criarGrupoHospedes(int numeroGrupo) {
+    public static List<Hospede> createGuestGroup(int groupNumber) {
         Random random = new Random();
-        int numHospedes = random.nextInt(10) + 1; // De 1 a 10 hóspedes
-        List<Hospede> grupoHospedes = new ArrayList<>();
+        int numGuests = random.nextInt(10) + 1; // From 1 to 10 guests
+        List<Hospede> guestGroup = new ArrayList<>();
 
-        for (int i = 0; i < numHospedes; i++) {
-            Hospede hospede = new Hospede(numeroGrupo); // Cria uma instância de Hospede sem um nome específico
-            grupoHospedes.add(hospede);
+        for (int i = 0; i < numGuests; i++) {
+            Hospede guest = new Hospede(groupNumber); // Creates an instance of Hospede without a specific name
+            guestGroup.add(guest);
         }
-        return grupoHospedes;
+        return guestGroup;
     }
 }
