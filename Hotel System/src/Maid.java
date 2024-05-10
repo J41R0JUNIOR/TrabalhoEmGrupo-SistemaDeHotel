@@ -17,12 +17,6 @@ public class Maid extends Thread {
         this.assignedRooms = assignedRooms;
     }
 
-    // Method to get the maid's name
-//    public String getName() {
-//        return name;
-//    }
-
-
     // Static method to pause all maids
     public static void pause() {
         active = false;
