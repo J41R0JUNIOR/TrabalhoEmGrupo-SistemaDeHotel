@@ -10,10 +10,10 @@ public class Main {
         // List to store threads
         List<Thread> threads = new ArrayList<>();
         // Waiting queue for groups of guests
-        BlockingQueue<List<Hospede>> waitingQueue = new ArrayBlockingQueue<>(10);
+        BlockingQueue<List<Guest>> waitingQueue = new ArrayBlockingQueue<>(10);
         // Creates and starts threads for receptionists
         for (int i = 1; i <= 8; i++) {
-            List<Hospede> guestGroup = createGuestGroup(i);
+            List<Guest> guestGroup = createGuestGroup(i);
             threads.addAll(guestGroup);
             int a = i % 5;
             Receptionist receptionist = new Receptionist("Service nr: " + i + ", Receptionist: " + a, hotel,
@@ -22,11 +22,11 @@ public class Main {
             threads.add(receptionist);
         }
         // Creates and starts threads for maids
-        List<Housekeeper> housekeepers = new ArrayList<>();
+        List<Maid> housekeepers = new ArrayList<>();
         for (int i = 0; i < 10; i++) { // Changed to 10 housekeepers
-            List<Quarto> assignedRooms = new ArrayList<>();
-            assignedRooms.add(hotel.getQuartos().get(i)); // Each maid is responsible for one room
-            Housekeeper housekeeper = new Housekeeper("Housekeeper " + (i + 1), assignedRooms);
+            List<Room> assignedRooms = new ArrayList<>();
+            assignedRooms.add(hotel.getRooms().get(i)); // Each maid is responsible for one room
+            Maid housekeeper = new Maid("Housekeeper " + (i + 1), assignedRooms);
             housekeeper.start();
             housekeepers.add(housekeeper);
         }
@@ -42,7 +42,7 @@ public class Main {
         // Simulates going out for a walk
         System.out
                 .println("\n-------------------------------------------------\nGuests are going out for a walk...");
-        for (Quarto room : hotel.getQuartos()) {
+        for (Room room : hotel.getRooms()) {
             room.returnKey(); // Returns the key at the reception when going out
         }
 
@@ -51,23 +51,23 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        for (Quarto room : hotel.getQuartos()) {
+        for (Room room : hotel.getRooms()) {
             room.takeKey(); // Returns the key at the reception when going out
         }
 
         System.out.println(
                 "\n-------------------------------------------------\nAll guest groups have completed their stay.");
 
-        Housekeeper.pause();
+        Maid.pause();
     }
 
-    public static List<Hospede> createGuestGroup(int groupNumber) {
+    public static List<Guest> createGuestGroup(int groupNumber) {
         Random random = new Random();
         int numGuests = random.nextInt(10) + 1; // From 1 to 10 guests
-        List<Hospede> guestGroup = new ArrayList<>();
+        List<Guest> guestGroup = new ArrayList<>();
 
         for (int i = 0; i < numGuests; i++) {
-            Hospede guest = new Hospede(groupNumber); // Creates an instance of Hospede without a specific name
+            Guest guest = new Guest(groupNumber); // Creates an instance of Hospede without a specific name
             guestGroup.add(guest);
         }
         return guestGroup;
