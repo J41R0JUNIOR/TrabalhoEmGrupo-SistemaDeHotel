@@ -55,5 +55,5 @@ Essas práticas contribuíram significativamente para a organização e o sucess
 - Projetos com erro de sintaxe ou não executáveis receberão nota 0.
 - A entrega é até 09/05, 23:59, pelo AVA.
 - O envio deve conter apenas um link para o repositório público no GitHub, sem arquivos zipados.
-- 
+  
 *Este projeto foi desenvolvido como parte da AT3/N1 - Atividade Prática Coletiva - Bimestre N1.*
