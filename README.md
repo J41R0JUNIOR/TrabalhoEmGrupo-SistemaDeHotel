@@ -24,6 +24,7 @@ Essas práticas contribuíram significativamente para a organização e o sucess
 - **Hóspede:** Representado por uma thread, com no mínimo 50 hóspedes.
 - **Camareira:** Representada por uma thread, com no mínimo 10 camareiras.
 - **Recepcionista:** Representada por uma thread, com no mínimo 5 recepcionistas.
+- **Hotel:** Representando o hotel em sí, é nele onde fica o core de toda a aplicação.
 
 ### Regras do Sistema:
 - Vários recepcionistas trabalham juntos para alocar hóspedes apenas em quartos vagos.
